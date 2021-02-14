@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model sports {
+  id Int @id @default(autoincrement())
+  data_type String
+  data_contents Json
+  season String
+  created_at  DateTime @default(now())
+}
+
+model post {
+  id String @id @default(uuid())
+  title String
+  contents String
+  views Int @default(0)
+  created_at DateTime @default(now())
+  updated_at DateTime?
+  category_id String
+  code_info category @relation(fields: [category_id], references: [id])
+}
+
+model comments {
+  id Int @id @default(autoincrement())
+  contents String
+  author_id String
+  author_pwd String
+  author_ip String
+  depth Int @default(0)
+  parentId Int?
+  created_at DateTime @default(now())
+  updated_at DateTime?
+  use_yn String @default("Y")
+}
+
+model category {
+  id String @id @default(uuid())
+  name String @unique
+  type String
+  description String?
+}

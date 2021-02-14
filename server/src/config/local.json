@@ -1,0 +1,14 @@
+{
+    "port": "3001",
+    "secret": "1!2@3#",
+    "frontend": [
+        {
+            "url": "localhost",
+            "port": "2999"
+        },
+        {
+            "url": "localhost",
+            "port": "3000"
+        }
+    ]
+}

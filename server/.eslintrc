@@ -1,0 +1,20 @@
+{
+	"root": true,
+	"env": {
+		"node": true,
+		"es2021": true
+	},
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"parser": "babel-eslint",
+		"sourceType": "module"
+	},
+	"extends": ["prettier", "plugin:prettier/recommended"],
+	"plugins": ["prettier"],
+	"rules": {
+		"prettier/prettier": "warn",
+		"eqeqeq": "warn",
+		"no-console": ["warn", { "allow": ["info", "error", "warn"] }],
+		"camelcase": "off"
+	}
+}

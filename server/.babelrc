@@ -1,0 +1,35 @@
+{
+	"presets": [
+		[
+			"@babel/env",
+			{
+				"targets": {
+					"node": "current"
+				}
+			}
+		]
+	],
+	"plugins": [
+		"@babel/plugin-proposal-class-properties",
+		"@babel/plugin-proposal-object-rest-spread",
+		"import-directory",
+		[
+			"babel-plugin-root-import",
+			{
+				"rootPathSuffix": "./src",
+				"rootPathPrefix": "@/"
+			}
+		],
+		[
+			"module-resolver",
+			{
+				"extensions": [".ts"],
+				"root": ["."],
+				"alias": {
+					"@": "./src/"
+				}
+			}
+		]
+	],
+	"ignore": ["./src/__tests__"]
+}
