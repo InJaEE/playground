@@ -16,7 +16,7 @@ const BlogLayout = ({ children }: Props) => {
 	const router = useRouter();
 	const searchHandler = useCallback(
 		(value: string) => {
-			router.push({ pathname: '/blog/search', query: { value } });
+			router.push({ pathname: '/blog/search', query: { title: value } });
 		},
 		[router],
 	);
@@ -34,18 +34,18 @@ const BlogLayout = ({ children }: Props) => {
 						<SubMenu title="Development" key="sub1">
 							<Menu.ItemGroup>
 								<Menu.Item key="1" icon={<SiTypescript />}>
-									<Link href={{ pathname: '/blog/search', query: { category: 'ts' } }}>
+									<Link href={{ pathname: '/blog/search', query: { category: 'Typescript' } }}>
 										Typescript
 									</Link>
 								</Menu.Item>
 								<Menu.Item key="2" icon={<SiJavascript />}>
-									<Link href={{ pathname: '/blog/search', query: { category: 'js' } }}>
+									<Link href={{ pathname: '/blog/search', query: { category: 'Javascript' } }}>
 										Javscript
 									</Link>
 								</Menu.Item>
 								<Menu.Item key="3" icon={<HiDesktopComputer />}>
-									<Link href={{ pathname: '/blog/search', query: { category: 'cs' } }}>
-										Computer Science
+									<Link href={{ pathname: '/blog/search', query: { category: 'ComputerScience' } }}>
+										ComputerScience
 									</Link>
 								</Menu.Item>
 							</Menu.ItemGroup>

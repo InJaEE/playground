@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import BlogLayout from '@/layouts/Blog';
-import { Button, List } from 'antd';
+import { Button, List, Skeleton } from 'antd';
 import { loadPosts, testPost } from '@/store/actions/post';
 import wrapper from '@/store/';
 
 const Blog = () => {
 	const dispatch = useDispatch();
-	const selector = useSelector(state => state.post.posts);
-	console.log('selector', selector);
+	const router = useRouter();
+	const { posts, loadPostsLoading } = useSelector(state => state.post);
 
 	useEffect(() => {
+		console.log('ROuter:', router.query);
 		// async function fetch() {
 		// 	const { payload } = await dispatch(loadPosts());
 		// 	console.log('payload.result:', payload.result);
@@ -37,13 +39,17 @@ const Blog = () => {
 						pageSize: 10,
 						style: { textAlign: 'center' },
 					}}
-					dataSource={listData}
-					renderItem={(item: any) => (
-						<List.Item key={item.title}>
-							<List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-							{item.content}
-						</List.Item>
-					)}
+					dataSource={posts || listData}
+					renderItem={(item: any) => {
+						return loadPostsLoading ? (
+							<Skeleton active />
+						) : (
+							<List.Item key={item.id}>
+								<List.Item.Meta title={item.title} description={item.code_info.name} />
+								{item.contents} {item.created_at}
+							</List.Item>
+						);
+					}}
 				/>
 			</BlogLayout>
 		</>
