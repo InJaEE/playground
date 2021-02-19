@@ -20,6 +20,7 @@ model sports {
 
 model post {
   id String @id @default(uuid())
+  number Int @unique @default(autoincrement())
   title String
   contents String
   views Int @default(0)

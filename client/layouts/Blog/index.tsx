@@ -30,7 +30,9 @@ const BlogLayout = ({ children }: Props) => {
 			<Row>
 				<Col md={4} offset={4} xs={0}>
 					<Menu mode="inline" defaultOpenKeys={['sub1']} style={{ backgroundColor: 'inherit' }}>
-						<Menu.Item>전체</Menu.Item>
+						<Menu.Item>
+							<Link href="/blog">전체</Link>
+						</Menu.Item>
 						<SubMenu title="Development" key="sub1">
 							<Menu.ItemGroup>
 								<Menu.Item key="1" icon={<SiTypescript />}>

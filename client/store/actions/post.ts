@@ -15,6 +15,11 @@ export const loadPosts = createAsyncThunk('post/loadPosts', async (data, thunkAP
 	return data;
 });
 
+export const loadPost = createAsyncThunk('post/loadPost', async (data, thunkAPI) => {
+	const res = await instance.get(`/${data}`);
+	return res.data;
+});
+
 export const addPost = createAsyncThunk('post/addPost', async (data, thunkAPI) => {
 	try {
 		const res = await instance.post('/', data);
@@ -27,10 +32,4 @@ export const updatePost = createAsyncThunk('post/updatePost', async (data, thunk
 		const res = await instance.put('/', data);
 		return res.data;
 	} catch (err) {}
-});
-
-export const testPost = createAsyncThunk('post/testPost', async (data, thunkAPI) => {
-	// thunkAPI.dispatch();
-	const res = await instance.get('/');
-	return res.data;
 });

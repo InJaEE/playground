@@ -1,34 +1,23 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import BlogLayout from '@/layouts/Blog';
 import { Button, List, Skeleton } from 'antd';
-import { loadPosts, testPost } from '@/store/actions/post';
+import { loadPosts } from '@/store/actions/post';
 import wrapper from '@/store/';
 
 const Blog = () => {
 	const dispatch = useDispatch();
-	const router = useRouter();
 	const { posts, loadPostsLoading } = useSelector(state => state.post);
 
 	useEffect(() => {
-		console.log('ROuter:', router.query);
-		// async function fetch() {
-		// 	const { payload } = await dispatch(loadPosts());
-		// 	console.log('payload.result:', payload.result);
-
-		// 	console.log('selector:', selector);
-		// }
-		// fetch();
 		dispatch(loadPosts());
 	}, [dispatch]);
-	// const dispatchTest = () => {
-	// 	dispatch(testPost()).then(res => console.log('res', res));
-	// };
+
 	return (
 		<>
 			<BlogLayout>
-				{/* <Button onClick={dispatchTest}>TEST</Button> */}
 				<List
 					itemLayout="vertical"
 					size="large"
@@ -45,7 +34,10 @@ const Blog = () => {
 							<Skeleton active />
 						) : (
 							<List.Item key={item.id}>
-								<List.Item.Meta title={item.title} description={item.code_info.name} />
+								<List.Item.Meta
+									title={<Link href={`/blog/post/${item.number}`}>{item.title}</Link>}
+									description={item.code_info.name}
+								/>
 								{item.contents} {item.created_at}
 							</List.Item>
 						);

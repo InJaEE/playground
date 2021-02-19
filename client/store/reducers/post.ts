@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadPosts, testPost } from '@/store/actions/post';
+import { loadPosts, loadPost } from '@/store/actions/post';
 
 const initialState = {
 	loadPostsLoading: false,
 	loadPostsDone: false,
 	loadPostsError: null,
 	posts: [],
-	postTest: '',
+	loadPostLoading: false,
+	loadPostDone: false,
+	loadPostError: null,
+	post: {},
 };
 
 const postSlice = createSlice({
@@ -36,13 +39,24 @@ const postSlice = createSlice({
 				// @ts-ignore
 				state.loadPostsError = action.error.message;
 			})
-			.addCase(testPost.pending, state => {
-				state.postTest = '22';
+			.addCase(loadPost.pending, state => {
+				console.log('loadPosts.pending');
+				state.loadPostLoading = true;
+				state.loadPostDone = false;
+				state.loadPostError = null;
 			})
-			.addCase(testPost.fulfilled, (state, action) => {
-				console.log('action::', action);
-
-				state.postTest = action.payload;
+			.addCase(loadPost.fulfilled, (state, action) => {
+				console.log('loadPosts.fulfilled');
+				state.loadPostLoading = false;
+				state.loadPostDone = true;
+				state.post = action.payload.result;
+				// state.mainPosts = _concat(state.mainPosts, action.payload);
+				// state.hasMorePosts = action.payload.length === 10;
+			})
+			.addCase(loadPost.rejected, (state, action) => {
+				state.loadPostLoading = false;
+				// @ts-ignore
+				state.loadPostError = action.error.message;
 			});
 	},
 });

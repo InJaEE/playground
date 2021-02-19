@@ -22,12 +22,12 @@ router.get('/', async (req, res) => {
 	res.json({ result });
 });
 
-router.get('/:id', async (req, res) => {
-	const { id } = req.params;
-	console.log('id:', id);
+router.get('/:number', async (req, res) => {
+	const { number } = req.params;
+	console.log('number:', number);
 	const result = await prisma.post.findFirst({
 		where: {
-			id,
+			number: Number(number),
 		},
 	});
 	res.json({ result });
