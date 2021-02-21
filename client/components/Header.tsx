@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -8,9 +8,7 @@ type Props = {
 };
 
 const Header = ({ isMain }: Props) => {
-	// const onScollHandler = (evt: UIEvent<HTMLElement>) => {
-	// 	console.log(evt);
-	// };
+	const infoRef = useRef();
 	const [statePageYOffset, setPageYOffset] = useState(0);
 	const [hide, setHide] = useState(false);
 	const handleScroll = useCallback(() => {
@@ -51,7 +49,9 @@ const Header = ({ isMain }: Props) => {
 				</div>
 			</div>
 			<div>
-				<Link href="/info">Info</Link>
+				<Link href="/info">
+					<a>Info</a>
+				</Link>
 			</div>
 		</HeaderWrapper>
 	);

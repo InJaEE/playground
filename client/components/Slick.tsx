@@ -23,12 +23,18 @@ const Slick = () => {
 			itemClass="carousel-item-padding-40-px"
 			css={customCss}
 		>
-			<img src="/carousel/coding.jpg" width="1903px" height="510.375em" />
-			<img src="/carousel/mlb.jpg" width="1903px" height="510.375em" />
-			<img src="/carousel/hiphop.jpg" width="1903px" height="510.375em" />
+			<img src="/carousel/coding.jpg" css={imgCss} />
+			<img src="/carousel/mlb.jpg" css={imgCss} />
+			<img src="/carousel/hiphop.jpg" css={imgCss} />
 		</Carousel>
 	);
 };
+
+const imgCss = css`
+	width: 100%;
+	max-width: 1903px;
+	max-height: 500px;
+`;
 
 const customCss = css`
 	& .react-multiple-carousel__arrow {

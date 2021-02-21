@@ -6,13 +6,11 @@ const instance = axios.create({
 	withCredentials: true, // front, backend 간 쿠키공유
 });
 
-export const loadPosts = createAsyncThunk('post/loadPosts', async (data, thunkAPI) => {
+export const loadPosts = createAsyncThunk('post/loadPosts', async data => {
 	try {
 		const res = await instance.get('/', { params: data });
-		// thunkAPI.dispatch();
 		return res.data;
 	} catch (err) {}
-	return data;
 });
 
 export const loadPost = createAsyncThunk('post/loadPost', async (data, thunkAPI) => {

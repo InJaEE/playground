@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import BlogLayout from '@/layouts/Blog';
-import { Button, List, Skeleton } from 'antd';
+import { List, Skeleton } from 'antd';
 import { loadPosts } from '@/store/actions/post';
 import wrapper from '@/store/';
+import { GetServerSideProps } from 'next';
 
 const Blog = () => {
-	const dispatch = useDispatch();
 	const { posts, loadPostsLoading } = useSelector(state => state.post);
-
-	useEffect(() => {
-		dispatch(loadPosts());
-	}, [dispatch]);
-
 	return (
 		<>
 			<BlogLayout>
@@ -28,7 +22,7 @@ const Blog = () => {
 						pageSize: 10,
 						style: { textAlign: 'center' },
 					}}
-					dataSource={posts || listData}
+					dataSource={posts}
 					renderItem={(item: any) => {
 						return loadPostsLoading ? (
 							<Skeleton active />
@@ -48,21 +42,9 @@ const Blog = () => {
 	);
 };
 
-// wrapper.getServerSideProps(async context => {
-// 	context.store.dispatch(loadPosts());
-// });
-
-const listData: any = [];
-for (let i = 0; i < 23; i++) {
-	listData.push({
-		href: 'https://ant.design',
-		title: `ant design part ${i}`,
-		avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-		description:
-			'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-		content:
-			'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-	});
-}
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(async ctx => {
+	await ctx.store.dispatch(loadPosts());
+	return { props: {} };
+});
 
 export default Blog;
