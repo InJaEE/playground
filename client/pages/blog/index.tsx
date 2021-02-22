@@ -8,7 +8,7 @@ import wrapper from '@/store/';
 import { GetServerSideProps } from 'next';
 
 const Blog = () => {
-	const { posts, loadPostsLoading } = useSelector(state => state.post);
+	const { posts, loadPostsLoading } = useSelector((state: any) => state.post);
 	return (
 		<>
 			<BlogLayout>

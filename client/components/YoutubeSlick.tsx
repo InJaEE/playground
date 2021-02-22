@@ -2,11 +2,15 @@ import React from 'react';
 import Carousel from 'react-multi-carousel';
 import { css } from '@emotion/react';
 
-const Slick = () => {
+type Props = {
+	youtube: object[];
+};
+
+const YoutubeSlick = ({ youtube }: Props) => {
 	return (
 		<Carousel
-			swipeable={false}
-			draggable={false}
+			swipeable
+			draggable
 			showDots={false}
 			responsive={responsive}
 			ssr={true} // means to render carousel on server-side.
@@ -22,9 +26,9 @@ const Slick = () => {
 			itemClass="carousel-item-padding-40-px"
 			css={customCss}
 		>
-			<img src="/carousel/coding.jpg" css={imgCss} />
-			<img src="/carousel/mlb.jpg" css={imgCss} />
-			<img src="/carousel/hiphop.jpg" css={imgCss} />
+			{youtube.map((item: any) => (
+				<img src={item.snippet.thumbnails.high.url} alt="youtube" css={imgCss} key={item.id} />
+			))}
 		</Carousel>
 	);
 };
@@ -45,11 +49,11 @@ const customCss = css`
 const responsive = {
 	desktop: {
 		breakpoint: { max: 3000, min: 1024 },
-		items: 1,
+		items: 3,
 	},
 	tablet: {
 		breakpoint: { max: 1024, min: 464 },
-		items: 1,
+		items: 3,
 	},
 	mobile: {
 		breakpoint: { max: 464, min: 0 },
@@ -57,4 +61,4 @@ const responsive = {
 	},
 };
 
-export default Slick;
+export default YoutubeSlick;

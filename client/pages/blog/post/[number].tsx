@@ -6,7 +6,7 @@ import wrapper from '@/store/';
 import BlogLayout from '@/layouts/Blog';
 
 const Content = () => {
-	const { post, loadPostLoading } = useSelector(state => state.post);
+	const { post, loadPostLoading } = useSelector((state: any) => state.post);
 	return (
 		<BlogLayout>
 			<h1>{post.title}</h1>
