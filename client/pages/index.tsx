@@ -10,10 +10,11 @@ import YoutubeSlick from '@/components/YoutubeSlick';
 import axios from 'axios';
 
 type Props = {
+	youtubeCategory: string;
 	youtube: object[];
 };
 
-const Home = ({ youtube }: Props) => {
+const Home = ({ youtubeCategory, youtube }: Props) => {
 	const dispatch = useDispatch();
 	const { posts, loadPostsLoading } = useSelector((state: any) => state.post);
 	useEffect(() => {
@@ -39,7 +40,10 @@ const Home = ({ youtube }: Props) => {
 						<List header={<div>소식2</div>}></List>
 					</Col>
 				</Row>
-				<YoutubeSlick youtube={youtube} />
+				<div>
+					<h2>Youtube {youtubeCategory}</h2>
+					<YoutubeSlick youtube={youtube} />
+				</div>
 				<Row gutter={32}>
 					<Col xs={24} md={12}>
 						<List header={<div>소식4</div>}></List>
@@ -54,18 +58,25 @@ const Home = ({ youtube }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+	const videoCategory = [
+		{ name: 'Music', id: 10 },
+		{ name: 'Pets&Animals', id: 15 },
+		{ name: 'Sports', id: 17 },
+		{ name: 'Gaming', id: 20 },
+		{ name: 'Movies', id: 30 },
+	];
+	const selectedCategory = videoCategory[new Date().getMilliseconds() % videoCategory.length];
 	const { data } = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
 		params: {
 			key: process.env.YOUTUBE_KEY,
 			chart: 'mostPopular',
 			regionCode: 'kr',
-			// 10: Music, 15: Pets& Animals, 17: SPorts, 20: Gaming, 30: Movies
-			videoCategoryId: 10,
+			videoCategoryId: selectedCategory.id,
 			part: 'snippet',
 			maxResults: 10,
 		},
 	});
-	return { props: { youtube: data.items } };
+	return { props: { youtubeCategory: selectedCategory.name, youtube: data.items } };
 };
 
 const main_wrapper = css`
