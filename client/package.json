@@ -8,6 +8,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.5.0",
     "@emotion/react": "^11.1.5",
     "@emotion/styled": "^11.1.5",
     "@reduxjs/toolkit": "^1.5.0",

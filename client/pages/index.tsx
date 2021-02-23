@@ -66,17 +66,21 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		{ name: 'Movies', id: 30 },
 	];
 	const selectedCategory = videoCategory[new Date().getMilliseconds() % videoCategory.length];
-	const { data } = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
-		params: {
-			key: process.env.YOUTUBE_KEY,
-			chart: 'mostPopular',
-			regionCode: 'kr',
-			videoCategoryId: selectedCategory.id,
-			part: 'snippet',
-			maxResults: 10,
-		},
-	});
-	return { props: { youtubeCategory: selectedCategory.name, youtube: data.items } };
+	try {
+		const { data } = await axios.get('https://www.googleapis.com/youtube/v3/videos', {
+			params: {
+				key: process.env.YOUTUBE_KEY,
+				chart: 'mostPopular',
+				regionCode: 'kr',
+				videoCategoryId: selectedCategory.id,
+				part: 'snippet',
+				maxResults: 10,
+			},
+		});
+		return { props: { youtubeCategory: selectedCategory.name, youtube: data.items } };
+	} catch (err) {
+		return { props: { youtubeCategory: '', youtube: [] } };
+	}
 };
 
 const main_wrapper = css`

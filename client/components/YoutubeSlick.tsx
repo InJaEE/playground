@@ -1,35 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import { css } from '@emotion/react';
+import VideoZoom from '@/components/VideoZoom';
 
 type Props = {
 	youtube: object[];
 };
 
 const YoutubeSlick = ({ youtube }: Props) => {
+	const [showVideoZoom, setShowVideoZoom] = useState(false);
+	const [videoZoomSrc, setVideoZoomSrc] = useState('');
+	const showVideoHandler = (src: string) => {
+		setShowVideoZoom(true);
+		setVideoZoomSrc(src);
+	};
 	return (
-		<Carousel
-			swipeable
-			draggable
-			showDots={false}
-			responsive={responsive}
-			ssr={true} // means to render carousel on server-side.
-			autoPlay={true}
-			infinite={true}
-			autoPlaySpeed={3000}
-			keyBoardControl={true}
-			customTransition="all .5"
-			transitionDuration={500}
-			containerClass="carousel-container"
-			removeArrowOnDeviceType={['tablet', 'mobile']}
-			dotListClass="custom-dot-list-style"
-			itemClass="carousel-item-padding-40-px"
-			css={customCss}
-		>
-			{youtube.map((item: any) => (
-				<img src={item.snippet.thumbnails.high.url} alt="youtube" css={imgCss} key={item.id} />
-			))}
-		</Carousel>
+		<>
+			<Carousel
+				swipeable
+				draggable
+				showDots={false}
+				responsive={responsive}
+				ssr={true} // means to render carousel on server-side.
+				autoPlay={true}
+				infinite={true}
+				autoPlaySpeed={3000}
+				keyBoardControl={true}
+				customTransition="all .5"
+				transitionDuration={500}
+				containerClass="carousel-container"
+				removeArrowOnDeviceType={['tablet', 'mobile']}
+				dotListClass="custom-dot-list-style"
+				itemClass="carousel-item-padding-40-px"
+				css={customCss}
+			>
+				{youtube.map((item: any) => (
+					<img
+						src={item.snippet.thumbnails.high.url}
+						alt="youtube"
+						css={imgCss}
+						key={item.id}
+						onClick={() => showVideoHandler(item.id)}
+					/>
+				))}
+			</Carousel>
+			{showVideoZoom && <VideoZoom videoSrc={videoZoomSrc} setShowVideoZoom={setShowVideoZoom} />}
+		</>
 	);
 };
 
@@ -37,11 +53,15 @@ const imgCss = css`
 	width: 100%;
 	max-width: 1903px;
 	max-height: 500px;
+	cursor: pointer;
 `;
 
 const customCss = css`
 	& .react-multiple-carousel__arrow {
 		z-index: 2 !important;
+	}
+	& .react-multi-carousel-item {
+		padding: 0.5rem;
 	}
 `;
 
