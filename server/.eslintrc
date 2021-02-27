@@ -4,13 +4,13 @@
 		"node": true,
 		"es2021": true
 	},
-	"parser": "babel-eslint",
+	"parser": "typescript",
 	"parserOptions": {
 		"parser": "babel-eslint",
 		"sourceType": "module"
 	},
 	"extends": ["prettier", "plugin:prettier/recommended"],
-	"plugins": ["prettier"],
+	"plugins": ["prettier", "@typescript-eslint"],
 	"rules": {
 		"prettier/prettier": "warn",
 		"eqeqeq": "warn",

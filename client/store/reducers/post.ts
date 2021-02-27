@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadPosts, loadPost, addPost } from '@/store/actions/post';
 
+type Image = {
+	path: string;
+};
+
 type Post = {
 	title: string;
 	contents: string;
 	description?: string;
+	images?: Image[];
 };
 
 export type InitialState = {

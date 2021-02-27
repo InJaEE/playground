@@ -1,12 +1,17 @@
-import { Router } from 'express';
+import { Router, query } from 'express';
 import fs from 'fs';
 import { v4 as uuid } from 'uuid';
 import prisma from '@/database';
 const router = Router();
 
+type Query = {
+	title: string;
+	category: string;
+};
+
 router.get('/', async (req, res) => {
 	//const { category, title } = req.query;
-	const { title, category } = req.query as any;
+	const { title, category } = req.query as Query;
 	const result = await prisma.post.findMany({
 		include: {
 			code_info: true,
@@ -37,6 +42,9 @@ router.get('/:number', async (req, res) => {
 	const result = await prisma.post.findFirst({
 		where: {
 			number: Number(number),
+		},
+		include: {
+			images: true,
 		},
 	});
 	res.json({ result });
