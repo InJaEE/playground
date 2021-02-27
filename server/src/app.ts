@@ -9,7 +9,8 @@ import cors from 'cors';
 
 const app = express();
 
-app.use(express.json());
+app.use('/images', express.static('images'));
+app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(

@@ -7,6 +7,8 @@ import { loadPosts } from '@/store/actions/post';
 import dayjs from 'dayjs';
 import wrapper from '@/store/';
 import { GetServerSideProps } from 'next';
+import { css } from '@emotion/react';
+import htmlParse from 'html-react-parser';
 
 const Blog = () => {
 	const { posts, loadPostsLoading } = useSelector((state: any) => state.post);
@@ -36,7 +38,20 @@ const Blog = () => {
 								<List.Item.Meta
 									title={<Link href={`/blog/post/${item.number}`}>{item.title}</Link>}
 								/>
-								{item.contents}
+								<div css={contentsStyle}>
+									<div>{htmlParse(item.contents.replace(/\[\[image\]\]/g, ''))}</div>
+									<div>
+										{item.images[0]?.path ? (
+											<img
+												width="162px"
+												src={`http://localhost:3001/${item.images[0].path}`}
+												alt="no image"
+											/>
+										) : (
+											<img width="162px" src="https://i.stack.imgur.com/y9DpT.jpg" alt="no image" />
+										)}
+									</div>
+								</div>
 							</List.Item>
 						);
 					}}
@@ -50,5 +65,10 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 	await ctx.store.dispatch(loadPosts());
 	return { props: {} };
 });
+
+const contentsStyle = css`
+	display: flex;
+	justify-content: space-between;
+`;
 
 export default Blog;

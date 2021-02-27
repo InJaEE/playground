@@ -8,6 +8,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["createMany"]
 }
 
 model sports {
@@ -28,9 +29,11 @@ model post {
   updated_at DateTime?
   category_id String
   code_info category @relation(fields: [category_id], references: [id])
+  images image[]
+  comments comment[]
 }
 
-model comments {
+model comment {
   id Int @id @default(autoincrement())
   contents String
   author_id String
@@ -41,6 +44,8 @@ model comments {
   created_at DateTime @default(now())
   updated_at DateTime?
   use_yn String @default("Y")
+  post post @relation(fields: [postId], references: [id])
+  postId String
 }
 
 model category {
@@ -48,4 +53,11 @@ model category {
   name String @unique
   type String
   description String?
+}
+
+model image {
+  id Int @id @default(autoincrement())
+  path String
+  post post @relation(fields: [postId], references: [id])
+  postId String
 }
