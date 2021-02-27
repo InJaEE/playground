@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import BlogLayout from '@/layouts/Blog';
 import { List, Skeleton } from 'antd';
 import { loadPosts } from '@/store/actions/post';
+import dayjs from 'dayjs';
 import wrapper from '@/store/';
 import { GetServerSideProps } from 'next';
 
@@ -28,11 +29,14 @@ const Blog = () => {
 							<Skeleton active />
 						) : (
 							<List.Item key={item.id}>
+								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+									<div className="ant-list-item-meta-description">{item.code_info.name}</div>
+									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>
+								</div>
 								<List.Item.Meta
 									title={<Link href={`/blog/post/${item.number}`}>{item.title}</Link>}
-									description={item.code_info.name}
 								/>
-								{item.contents} {item.created_at}
+								{item.contents}
 							</List.Item>
 						);
 					}}

@@ -1,7 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadPosts, loadPost } from '@/store/actions/post';
+import { loadPosts, loadPost, addPost } from '@/store/actions/post';
 
-const initialState = {
+type InitialState = {
+	loadPostsLoading: boolean;
+	loadPostsDone: boolean;
+	loadPostsError: null | string;
+	posts: [];
+	loadPostLoading: boolean;
+	loadPostDone: boolean;
+	loadPostError: null | string;
+	post: {};
+	addPostLoading: boolean;
+	addPostDone: boolean;
+	addPostError: null | string;
+};
+
+const initialState: InitialState = {
 	loadPostsLoading: false,
 	loadPostsDone: false,
 	loadPostsError: null,
@@ -10,6 +24,9 @@ const initialState = {
 	loadPostDone: false,
 	loadPostError: null,
 	post: {},
+	addPostLoading: false,
+	addPostDone: false,
+	addPostError: null,
 };
 
 const postSlice = createSlice({
@@ -21,23 +38,18 @@ const postSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(loadPosts.pending, state => {
-				console.log('loadPosts.pending');
 				state.loadPostsLoading = true;
 				state.loadPostsDone = false;
 				state.loadPostsError = null;
 			})
 			.addCase(loadPosts.fulfilled, (state, action) => {
-				console.log('loadPosts.fulfilled');
 				state.loadPostsLoading = false;
 				state.loadPostsDone = true;
 				state.posts = action.payload.result;
-				// state.mainPosts = _concat(state.mainPosts, action.payload);
-				// state.hasMorePosts = action.payload.length === 10;
 			})
 			.addCase(loadPosts.rejected, (state, action) => {
 				state.loadPostsLoading = false;
-				// @ts-ignore
-				state.loadPostsError = action.error.message;
+				state.loadPostsError = action.error.message!;
 			})
 			.addCase(loadPost.pending, state => {
 				console.log('loadPosts.pending');
@@ -50,13 +62,24 @@ const postSlice = createSlice({
 				state.loadPostLoading = false;
 				state.loadPostDone = true;
 				state.post = action.payload.result;
-				// state.mainPosts = _concat(state.mainPosts, action.payload);
-				// state.hasMorePosts = action.payload.length === 10;
 			})
 			.addCase(loadPost.rejected, (state, action) => {
 				state.loadPostLoading = false;
-				// @ts-ignore
-				state.loadPostError = action.error.message;
+				state.loadPostError = action.error.message!;
+			})
+			.addCase(addPost.pending, (state, action) => {
+				state.addPostDone = false;
+				state.addPostLoading = true;
+				state.addPostError = null;
+			})
+			.addCase(addPost.fulfilled, (state, action) => {
+				state.addPostDone = true;
+				state.addPostLoading = false;
+			})
+			.addCase(addPost.rejected, (state, action) => {
+				state.addPostDone = true;
+				state.addPostLoading = false;
+				state.addPostError = action.error.message!;
 			});
 	},
 });

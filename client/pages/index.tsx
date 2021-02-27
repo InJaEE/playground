@@ -79,7 +79,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		});
 		return { props: { youtubeCategory: selectedCategory.name, youtube: data.items } };
 	} catch (err) {
-		return { props: { youtubeCategory: '', youtube: [] } };
+		return { props: { youtubeCategory: selectedCategory.name, youtube: [] } };
 	}
 };
 

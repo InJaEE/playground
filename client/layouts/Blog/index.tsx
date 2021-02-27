@@ -2,7 +2,7 @@ import React, { ReactNode, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Row, Col, Input, Menu, Button } from 'antd';
-import { headerStyle, writeButtonStyle } from './style';
+import { headerStyle, writeButtonStyle, childrenColStyle } from './style';
 import { SiTypescript, SiJavascript } from 'react-icons/si';
 import { HiDesktopComputer } from 'react-icons/hi';
 import { MdCreate } from 'react-icons/md';
@@ -28,7 +28,7 @@ const BlogLayout = ({ children }: Props) => {
 				</Col>
 			</Row>
 			<Row>
-				<Col md={4} offset={4} xs={0}>
+				<Col md={4} sm={3} xs={0} offset={4}>
 					<Menu mode="inline" defaultOpenKeys={['sub1']} style={{ backgroundColor: 'inherit' }}>
 						<Menu.Item>
 							<Link href="/blog">전체</Link>
@@ -54,7 +54,7 @@ const BlogLayout = ({ children }: Props) => {
 						</SubMenu>
 					</Menu>
 				</Col>
-				<Col md={12} xs={24}>
+				<Col md={12} sm={16} xs={24} css={childrenColStyle}>
 					{children}
 				</Col>
 			</Row>

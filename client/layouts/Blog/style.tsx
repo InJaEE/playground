@@ -10,3 +10,7 @@ export const writeButtonStyle = css`
 	right: 50px;
 	color: blue;
 `;
+
+export const childrenColStyle = css`
+	padding: 12px 36px;
+`;
