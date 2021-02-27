@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import 'codemirror/lib/codemirror.css';
@@ -6,6 +6,9 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import BlogLayout from '@/layouts/Blog';
 import { TuiEditorWithForwardedProps } from '@/components/Editor';
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from '@/store/actions/post';
+import { getCategories } from '@/store/actions/category';
 import { Input, Select, Row, Col, Button } from 'antd';
 import { css } from '@emotion/react';
 
@@ -23,11 +26,26 @@ const EditorWithForwardedRef = React.forwardRef<EditorType | undefined, EditorPr
 	(props, ref) => <Editor {...props} forwardedRef={ref as React.MutableRefObject<EditorType>} />,
 );
 
+type Category = {
+	id: string;
+	name: string;
+	type: string;
+	description: null | string;
+};
+
 const Write = () => {
 	const [title, setTitle] = useState('');
 	const [contents, setContents] = useState<string | undefined>('');
+	const [category, setCategory] = useState('');
+	const { categories } = useSelector((state: any) => state.category);
+
 	const editorRef = useRef<EditorType>();
 	const router = useRouter();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getCategories());
+	}, [dispatch]);
 
 	const handleEditor = useCallback(() => {
 		const instance = editorRef.current?.getInstance();
@@ -35,10 +53,23 @@ const Write = () => {
 		console.log(instance?.getMarkdown());
 	}, [editorRef]);
 
-	const onClickHandler = useCallback(() => {
-		console.log(title);
-		console.log(contents);
-	}, [title, contents]);
+	const onOkHandler = useCallback(async () => {
+		if (category === '선택') {
+			alert('카테고리를 선택해주세요.');
+			return;
+		}
+		if (!title) {
+			alert('제목을 입력해주세요.');
+			return;
+		}
+		if (!contents) {
+			alert('내용을 입력해주세요.');
+			return;
+		}
+		const res = await dispatch(addPost({ title, contents, category_id: category }));
+		console.log('RES:::', res);
+		router.back();
+	}, [category, title, contents]);
 
 	const onCancelHandler = useCallback(() => {
 		let flag: boolean = true;
@@ -48,14 +79,24 @@ const Write = () => {
 		if (!flag) return;
 		router.back();
 	}, [title, contents]);
-
+	const categoryHandler = useCallback(
+		value => {
+			setCategory(value);
+		},
+		[category],
+	);
 	return (
 		<BlogLayout>
 			<strong>글쓰기</strong>
 			<Row>
 				<Col span={4}>
-					<Select defaultValue="선택" style={{ width: '100%' }}>
+					<Select defaultValue="선택" style={{ width: '100%' }} onChange={categoryHandler}>
 						<Select.Option value="선택">선택</Select.Option>
+						{categories.map((category: Category) => (
+							<Select.Option value={category.id} key={category.id}>
+								{category.name}
+							</Select.Option>
+						))}
 					</Select>
 				</Col>
 				<Col span={20}>
@@ -72,7 +113,7 @@ const Write = () => {
 				onChange={handleEditor}
 			/>
 			<Row justify="center" css={btnListStyle}>
-				<Button onClick={onClickHandler} css={btnOkStyle}>
+				<Button onClick={onOkHandler} css={btnOkStyle}>
 					확인
 				</Button>
 				<Button danger onClick={onCancelHandler}>

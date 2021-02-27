@@ -5,14 +5,15 @@ import Link from 'next/link';
 import { List, Skeleton } from 'antd';
 import { loadPosts } from '@/store/actions/post';
 import BlogLayout from '@/layouts/Blog';
+import { InitState } from '@/store/reducers';
 
 const Search = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { posts, loadPostsLoading } = useSelector(state => state.post);
+	const { posts, loadPostsLoading } = useSelector((state: InitState) => state.post);
 	const { query } = router;
+
 	useEffect(() => {
-		console.log(query);
 		dispatch(loadPosts(query));
 	}, [query]);
 

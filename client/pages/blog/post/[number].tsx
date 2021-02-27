@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 import { loadPost } from '@/store/actions/post';
 import wrapper from '@/store/';
 import BlogLayout from '@/layouts/Blog';
+import { InitState } from '@/store/reducers';
 
 const Content = () => {
-	const { post, loadPostLoading } = useSelector((state: any) => state.post);
+	const { post, loadPostLoading } = useSelector((state: InitState) => state.post);
 	return (
 		<BlogLayout>
 			<h1>{post.title}</h1>

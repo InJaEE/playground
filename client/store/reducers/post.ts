@@ -1,15 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadPosts, loadPost, addPost } from '@/store/actions/post';
 
-type InitialState = {
+type Post = {
+	title: string;
+	contents: string;
+	description?: string;
+};
+
+export type InitialState = {
 	loadPostsLoading: boolean;
 	loadPostsDone: boolean;
 	loadPostsError: null | string;
-	posts: [];
+	posts: Post[];
 	loadPostLoading: boolean;
 	loadPostDone: boolean;
 	loadPostError: null | string;
-	post: {};
+	post: Post;
 	addPostLoading: boolean;
 	addPostDone: boolean;
 	addPostError: null | string;
@@ -23,7 +29,10 @@ const initialState: InitialState = {
 	loadPostLoading: false,
 	loadPostDone: false,
 	loadPostError: null,
-	post: {},
+	post: {
+		title: '',
+		contents: '',
+	},
 	addPostLoading: false,
 	addPostDone: false,
 	addPostError: null,
@@ -68,16 +77,18 @@ const postSlice = createSlice({
 				state.loadPostError = action.error.message!;
 			})
 			.addCase(addPost.pending, (state, action) => {
+				console.log('PENDING');
 				state.addPostDone = false;
 				state.addPostLoading = true;
 				state.addPostError = null;
 			})
 			.addCase(addPost.fulfilled, (state, action) => {
+				console.log('FULFILLED');
 				state.addPostDone = true;
 				state.addPostLoading = false;
 			})
 			.addCase(addPost.rejected, (state, action) => {
-				state.addPostDone = true;
+				console.log('REJECTED');
 				state.addPostLoading = false;
 				state.addPostError = action.error.message!;
 			});
