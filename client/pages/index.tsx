@@ -63,7 +63,9 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 							loading={loadPostsLoading}
 							renderItem={(item: Post) => (
 								<List.Item>
-									<Link href={`/blog/post/${item.number}`}>{item.title}</Link>
+									<Link href={`/blog/post/${item.number}`}>
+										<a css={titleStyle}>{item.title}</a>
+									</Link>
 									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>
 								</List.Item>
 							)}
@@ -73,7 +75,7 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 						<List header={<div>소식2</div>}></List>
 					</Col>
 				</Row>
-				<div>
+				<div css={youtubeWrapperStyle}>
 					<h2>Youtube {youtubeCategory}</h2>
 					<YoutubeSlick youtube={youtube} />
 				</div>
@@ -120,6 +122,18 @@ const main_wrapper = css`
 	width: 80vw;
 	margin: 0 auto;
 	padding-top: 3rem;
+`;
+
+const titleStyle = css`
+	display: inline-block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 1rem;
+`;
+
+const youtubeWrapperStyle = css`
+	margin: 32px 0;
 `;
 
 export default Home;

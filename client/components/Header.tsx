@@ -37,6 +37,9 @@ const Header = ({ isMain }: Props) => {
 					<Link href="/blog">
 						<a>Blog</a>
 					</Link>
+					<Link href="/devMemo">
+						<a>DevMemo</a>
+					</Link>
 					<Link href="/sports">
 						<a>Sports</a>
 					</Link>
