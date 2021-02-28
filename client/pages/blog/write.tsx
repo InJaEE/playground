@@ -50,11 +50,11 @@ const Write = () => {
 	const handleEditor = useCallback(() => {
 		const instance = editorRef.current?.getInstance();
 		setContents(instance?.getHtml());
-		console.log(instance?.getMarkdown());
+		console.log('@', instance?.getMarkdown());
 	}, [editorRef]);
 
 	const onOkHandler = useCallback(async () => {
-		if (category === '선택') {
+		if (!category) {
 			alert('카테고리를 선택해주세요.');
 			return;
 		}
@@ -67,7 +67,6 @@ const Write = () => {
 			return;
 		}
 		const res = await dispatch(addPost({ title, contents, category_id: category }));
-		console.log('RES:::', res);
 		router.back();
 	}, [category, title, contents]);
 
@@ -90,8 +89,8 @@ const Write = () => {
 			<strong>글쓰기</strong>
 			<Row>
 				<Col span={4}>
-					<Select defaultValue="선택" style={{ width: '100%' }} onChange={categoryHandler}>
-						<Select.Option value="선택">선택</Select.Option>
+					<Select defaultValue="" style={{ width: '100%' }} onChange={categoryHandler}>
+						<Select.Option value="">선택</Select.Option>
 						{categories.map((category: Category) => (
 							<Select.Option value={category.id} key={category.id}>
 								{category.name}

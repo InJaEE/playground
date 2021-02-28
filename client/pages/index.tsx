@@ -1,25 +1,56 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadPosts } from '@/store/actions/post';
 import Slick from '@/components/Slick';
+import { Post } from '@/store/reducers/post';
 import { List, Row, Col } from 'antd';
 import { css } from '@emotion/react';
 import YoutubeSlick from '@/components/YoutubeSlick';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import { InitState } from '@/store/reducers/index';
+
+export type YoutubeVideo = {
+	etag: string;
+	id: string;
+	kind: string;
+	snippet: {
+		categoryId: string;
+		channelId: string;
+		channelTitle: string;
+		defaultAudioLanguage: string;
+		defaultLanguage: string;
+		description: string;
+		liveBroadcastContent: string;
+		localized: object[];
+		publishedAt: string;
+		tags: string[];
+		thumbnails: object[];
+		title: string;
+	};
+};
 
 type Props = {
 	youtubeCategory: string;
-	youtube: object[];
+	youtube: YoutubeVideo[];
 };
 
 const Home = ({ youtubeCategory, youtube }: Props) => {
 	const dispatch = useDispatch();
-	const { posts, loadPostsLoading } = useSelector((state: any) => state.post);
+	const { posts, loadPostsLoading } = useSelector((state: InitState) => state.post);
+	const [blogPost, setBlogPost] = useState(posts);
 	useEffect(() => {
 		dispatch(loadPosts());
 	}, [dispatch]);
+	useEffect(() => {
+		if (posts.length >= 5) {
+			setBlogPost(posts.slice(0, 5));
+		} else {
+			setBlogPost(posts);
+		}
+	}, [posts]);
 	return (
 		<>
 			<Slick />
@@ -28,10 +59,12 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 					<Col xs={24} md={12}>
 						<List
 							header={<h3>Blog</h3>}
-							dataSource={posts}
-							renderItem={(item: any) => (
+							dataSource={blogPost}
+							loading={loadPostsLoading}
+							renderItem={(item: Post) => (
 								<List.Item>
 									<Link href={`/blog/post/${item.number}`}>{item.title}</Link>
+									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>
 								</List.Item>
 							)}
 						></List>
@@ -63,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 		{ name: 'Pets&Animals', id: 15 },
 		{ name: 'Sports', id: 17 },
 		{ name: 'Gaming', id: 20 },
-		{ name: 'Movies', id: 30 },
+		// { name: 'Movies', id: 30 },
 	];
 	const selectedCategory = videoCategory[new Date().getMilliseconds() % videoCategory.length];
 	try {

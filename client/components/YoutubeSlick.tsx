@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import { css } from '@emotion/react';
 import VideoZoom from '@/components/VideoZoom';
+import { YoutubeVideo } from '@/pages/index';
 
 type Props = {
-	youtube: object[];
+	youtube: YoutubeVideo[];
 };
 
 const YoutubeSlick = ({ youtube }: Props) => {

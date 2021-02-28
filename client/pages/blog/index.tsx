@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import BlogLayout from '@/layouts/Blog';
@@ -6,12 +6,14 @@ import { List, Skeleton } from 'antd';
 import { loadPosts } from '@/store/actions/post';
 import dayjs from 'dayjs';
 import wrapper from '@/store/';
+import { Post } from '@/store/reducers/post';
 import { GetServerSideProps } from 'next';
 import { css } from '@emotion/react';
 import htmlParse from 'html-react-parser';
+import { InitState } from '@/store/reducers/index';
 
 const Blog = () => {
-	const { posts, loadPostsLoading } = useSelector((state: any) => state.post);
+	const { posts, loadPostsLoading } = useSelector((state: InitState) => state.post);
 	return (
 		<>
 			<BlogLayout>
@@ -26,7 +28,7 @@ const Blog = () => {
 						style: { textAlign: 'center' },
 					}}
 					dataSource={posts}
-					renderItem={(item: any) => {
+					renderItem={(item: Post) => {
 						return loadPostsLoading ? (
 							<Skeleton active />
 						) : (
@@ -36,21 +38,27 @@ const Blog = () => {
 									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>
 								</div>
 								<List.Item.Meta
-									title={<Link href={`/blog/post/${item.number}`}>{item.title}</Link>}
+									title={
+										<Link href={`/blog/post/${item.number}`}>
+											<span css={titleStyle}>{item.title}</span>
+										</Link>
+									}
 								/>
 								<div css={contentsStyle}>
-									<div>{htmlParse(item.contents.replace(/\[\[image\]\]/g, ''))}</div>
 									<div>
-										{item.images[0]?.path ? (
-											<img
-												width="162px"
-												src={`http://localhost:3001/${item.images[0].path}`}
-												alt="no image"
-											/>
-										) : (
-											<img width="162px" src="https://i.stack.imgur.com/y9DpT.jpg" alt="no image" />
-										)}
+										{htmlParse(item.contents.replace(/\[\[image\]\]/g, '').replace(/<[^>]+>/g, ''))}
 									</div>
+									{item.images.length > 0 && (
+										<img
+											width="162px"
+											src={`http://localhost:3001/${item.images[0].path}`}
+											onError={(evt: SyntheticEvent<HTMLImageElement, Event>) => {
+												// ssr에서 작동안함
+												evt.currentTarget.src = 'http://localhost:3001/images/noimage.jpg';
+											}}
+											alt="image"
+										/>
+									)}
 								</div>
 							</List.Item>
 						);
@@ -66,9 +74,26 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 	return { props: {} };
 });
 
+const titleStyle = css`
+	display: inline-block;
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;
+	font-size: 1.2rem;
+`;
+
 const contentsStyle = css`
 	display: flex;
 	justify-content: space-between;
+	& > div {
+		max-height: 4.8em;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+	}
 `;
 
 export default Blog;

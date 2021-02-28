@@ -3,12 +3,12 @@ import session from 'express-session';
 import FileStore from 'session-file-store';
 import logger from 'morgan';
 import cors from 'cors';
-import config, { frontend } from '../config';
-import passport from 'passport';
-import passportConfig from '@/passport';
+import config from '../config';
+// import passport from 'passport';
+// import passportConfig from '@/passport';
 
 const router = express.Router();
-passportConfig();
+// passportConfig();
 
 const store = FileStore(session);
 
@@ -16,7 +16,7 @@ router.use(logger('common'));
 router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
-const frontendURL = frontend.map(value => `http://${value.url}:${value.port}`);
+const frontendURL = config.frontend.map(value => `http://${value.url}:${value.port}`);
 const corsOption = {
 	origin(origin, callback) {
 		if (frontendURL.indexOf(origin) !== -1) {
@@ -42,7 +42,7 @@ router.use(
 		},
 	}),
 );
-router.use(passport.initialize());
-router.use(passport.session());
+// router.use(passport.initialize());
+// router.use(passport.session());
 
 export default router;

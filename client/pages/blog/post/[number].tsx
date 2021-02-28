@@ -14,9 +14,7 @@ const Content = () => {
 	useEffect(() => {
 		const imageArr = post.contents.match(/\[\[image\]\]/g);
 		let tempPost = post.contents;
-		let imageCount = 0;
 		if (imageArr) {
-			imageCount = imageArr.length;
 			imageArr.forEach((_, index) => {
 				tempPost = tempPost.replace(
 					'[[image]]',

@@ -1,5 +1,5 @@
 import express from 'express';
-import { config } from '@/config/index';
+import config from '@/config/index';
 import router from '@/router/index';
 import prisma from '@/database';
 import logger from '@/utils/logger';

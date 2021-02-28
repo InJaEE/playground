@@ -2,14 +2,25 @@ import { createSlice } from '@reduxjs/toolkit';
 import { loadPosts, loadPost, addPost } from '@/store/actions/post';
 
 type Image = {
+	id: string;
 	path: string;
+	postId: string;
 };
 
-type Post = {
+export type Post = {
+	id: string;
 	title: string;
 	contents: string;
 	description?: string;
-	images?: Image[];
+	images: Image[];
+	created_at: string;
+	number: number;
+	code_info: {
+		id: string;
+		name: string;
+		type: string;
+		description?: string;
+	};
 };
 
 export type InitialState = {
@@ -37,6 +48,17 @@ const initialState: InitialState = {
 	post: {
 		title: '',
 		contents: '',
+		code_info: {
+			id: '',
+			name: '',
+			type: '',
+			description: '',
+		},
+		created_at: '',
+		id: '',
+		images: [],
+		number: 0,
+		description: '',
 	},
 	addPostLoading: false,
 	addPostDone: false,
@@ -82,18 +104,15 @@ const postSlice = createSlice({
 				state.loadPostError = action.error.message!;
 			})
 			.addCase(addPost.pending, (state, action) => {
-				console.log('PENDING');
 				state.addPostDone = false;
 				state.addPostLoading = true;
 				state.addPostError = null;
 			})
 			.addCase(addPost.fulfilled, (state, action) => {
-				console.log('FULFILLED');
 				state.addPostDone = true;
 				state.addPostLoading = false;
 			})
 			.addCase(addPost.rejected, (state, action) => {
-				console.log('REJECTED');
 				state.addPostLoading = false;
 				state.addPostError = action.error.message!;
 			});
