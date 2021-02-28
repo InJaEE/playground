@@ -45,9 +45,9 @@ const Blog = () => {
 									}
 								/>
 								<div css={contentsStyle}>
-									<div>
+									<Link href={`/blog/post/${item.number}`}>
 										{htmlParse(item.contents.replace(/\[\[image\]\]/g, '').replace(/<[^>]+>/g, ''))}
-									</div>
+									</Link>
 									{item.images.length > 0 && (
 										<img
 											width="162px"
@@ -82,17 +82,20 @@ const titleStyle = css`
 	text-overflow: ellipsis;
 	font-weight: bold;
 	font-size: 1.2rem;
+	cursor: pointer;
 `;
 
 const contentsStyle = css`
 	display: flex;
 	justify-content: space-between;
-	& > div {
+	& > a {
 		max-height: 4.8em;
 		overflow: hidden;
 		display: -webkit-box;
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
+		color: black;
+		cursor: pointer;
 	}
 `;
 
