@@ -39,13 +39,13 @@ const Blog = () => {
 								</div>
 								<List.Item.Meta
 									title={
-										<Link href={`/blog/post/${item.number}`}>
+										<Link href={`/blog/post/${item.id}`}>
 											<span css={titleStyle}>{item.title}</span>
 										</Link>
 									}
 								/>
 								<div css={contentsStyle}>
-									<Link href={`/blog/post/${item.number}`}>
+									<Link href={`/blog/post/${item.id}`}>
 										{htmlParse(item.contents.replace(/\[\[image\]\]/g, '').replace(/<[^>]+>/g, ''))}
 									</Link>
 									{item.images.length > 0 && (

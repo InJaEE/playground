@@ -1,4 +1,4 @@
-import { Router, query } from 'express';
+import { Router } from 'express';
 import fs from 'fs';
 import { v4 as uuid } from 'uuid';
 import prisma from '@/database';
@@ -36,15 +36,22 @@ router.get('/', async (req, res) => {
 	res.json({ result });
 });
 
-router.get('/:number', async (req, res) => {
-	const { number } = req.params;
-	console.log('number:', number);
+router.get('/:postId', async (req, res) => {
+	const { postId } = req.params;
+	console.log('postId:', postId);
 	const result = await prisma.post.findFirst({
 		where: {
-			number: Number(number),
+			id: Number(postId),
 		},
 		include: {
 			images: true,
+			// comments: {
+			// 	include: {
+			// 		avatar: {
+
+			// 		}
+			// 	}
+			// }
 		},
 	});
 	res.json({ result });

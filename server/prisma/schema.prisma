@@ -20,8 +20,7 @@ model sports {
 }
 
 model post {
-  id String @id @default(uuid())
-  number Int @unique @default(autoincrement())
+  id Int @id @default(autoincrement())
   title String
   contents String
   views Int @default(0)
@@ -31,6 +30,7 @@ model post {
   code_info category @relation(fields: [category_id], references: [id])
   images image[]
   comments comment[]
+  like like[]
 }
 
 model comment {
@@ -45,7 +45,9 @@ model comment {
   updated_at DateTime?
   use_yn String @default("Y")
   post post @relation(fields: [postId], references: [id])
-  postId String
+  postId Int
+  avatar avatar? @relation(fields: [avatarId], references: [id])
+  avatarId Int?
 }
 
 model category {
@@ -59,5 +61,28 @@ model image {
   id Int @id @default(autoincrement())
   path String
   post post @relation(fields: [postId], references: [id])
-  postId String
+  postId Int
+}
+
+model avatar {
+  id Int @id @default(autoincrement())
+  comment comment?
+  topType String
+  accessoriesType String
+	hairColor String
+	facialHairType String
+	clotheType String
+	clotheColor String
+	eyeType String
+	eyebrowType String
+	mouthType String
+	skinColor String
+}
+
+model like {
+  id Int @id @default(autoincrement())
+  ip String
+  post post @relation(fields: [postId], references: [id])
+  postId Int
+  created_at DateTime @default(now())
 }
