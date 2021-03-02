@@ -20,7 +20,9 @@ const Content = () => {
 	const { comments, getCommentsLoading, total } = useSelector((state: InitState) => state.comment);
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const onModifyHandler = useCallback(() => {}, []);
+	const onModifyHandler = useCallback(() => {
+		router.push(`/blog/edit/${post.id}`);
+	}, [post]);
 	const onDeleteHandler = useCallback(() => {}, []);
 
 	useEffect(() => {

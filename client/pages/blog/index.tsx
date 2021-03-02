@@ -1,5 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import BlogLayout from '@/layouts/Blog';
 import { List, Skeleton } from 'antd';
@@ -14,6 +15,7 @@ import { InitState } from '@/store/reducers/index';
 
 const Blog = () => {
 	const { posts, loadPostsLoading } = useSelector((state: InitState) => state.post);
+	const router = useRouter();
 	return (
 		<>
 			<BlogLayout>
@@ -32,22 +34,21 @@ const Blog = () => {
 						return loadPostsLoading ? (
 							<Skeleton active />
 						) : (
-							<List.Item key={item.id}>
+							<List.Item
+								key={item.id}
+								onClick={() => {
+									router.push(`/blog/post/${item.id}`);
+								}}
+							>
 								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 									<div className="ant-list-item-meta-description">{item.code_info.name}</div>
 									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>
 								</div>
-								<List.Item.Meta
-									title={
-										<Link href={`/blog/post/${item.id}`}>
-											<span css={titleStyle}>{item.title}</span>
-										</Link>
-									}
-								/>
+								<List.Item.Meta title={<span css={titleStyle}>{item.title}</span>} />
 								<div css={contentsStyle}>
-									<Link href={`/blog/post/${item.id}`}>
+									<div>
 										{htmlParse(item.contents.replace(/\[\[image\]\]/g, '').replace(/<[^>]+>/g, ''))}
-									</Link>
+									</div>
 									{item.images.length > 0 && (
 										<img
 											css={previewImgStyle}

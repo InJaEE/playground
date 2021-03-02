@@ -12,6 +12,7 @@ export type Post = {
 	title: string;
 	contents: string;
 	description?: string;
+	category_id: string;
 	images: Image[];
 	created_at: string;
 	number: number;
