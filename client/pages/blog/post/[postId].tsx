@@ -16,27 +16,14 @@ import Comment, { CommentInfo } from '@/components/Comment';
 
 const Content = () => {
 	const { post, loadPostLoading } = useSelector((state: InitState) => state.post);
+	// comments는 SWR 사용할까?
 	const { comments, getCommentsLoading, total } = useSelector((state: InitState) => state.comment);
-	const [computedPost, setComputedPost] = useState(post.contents);
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const onModifyHandler = useCallback(() => {}, []);
 	const onDeleteHandler = useCallback(() => {}, []);
 
 	useEffect(() => {
-		const imageArr = post.contents.match(/\[\[image\]\]/g);
-		let tempPost = post.contents;
-		if (imageArr) {
-			imageArr.forEach((_, index) => {
-				tempPost = tempPost.replace(
-					'[[image]]',
-					`<img style="max-width: 100%;" src="http://localhost:3001/${
-						post.images![index].path
-					}" alt="image"/>`,
-				);
-			});
-		}
-		setComputedPost(tempPost);
 		dispatch(getComments({ postId: post.id }));
 	}, [post]);
 
@@ -44,7 +31,7 @@ const Content = () => {
 		<BlogLayout>
 			<h1>{post.title}</h1>
 			<hr />
-			<div css={mainContentsStyle}>{htmlParse(computedPost)}</div>
+			<div css={mainContentsStyle}>{htmlParse(post.contents)}</div>
 			<Divider />
 			<div css={buttonListStyle}>
 				<Button onClick={() => router.push('/blog')}>목록으로</Button>
@@ -74,13 +61,24 @@ const Content = () => {
 	);
 };
 
+// export async function getStaticPaths() {
+// 	return {
+// 		paths: [{ params: { id: '1' } }],
+// 		fallback: false,
+// 	};
+// }
+
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(async ctx => {
+	// SSR할때 이미지 처리 해줘야함
 	await ctx.store.dispatch(loadPost(ctx.query.postId));
 	return { props: {} };
 });
 
 const mainContentsStyle = css`
 	min-height: 20rem;
+	& img {
+		max-width: 100%;
+	}
 `;
 
 const buttonListStyle = css`

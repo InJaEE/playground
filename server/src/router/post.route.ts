@@ -65,18 +65,26 @@ router.post('/', async (req, res) => {
 
 	const imgArr = contents.match(/<img[^>]*>/g);
 	if (imgArr) {
+		// base64로된 이미지를 배열에 담는다.
 		const base64Arr = imgArr.map(v => v.match(/src="(data:image\/[^;]+;base64[^"]+)"/i, '')[1]);
+
 		const fileNameArr: string[] = [];
 		base64Arr.forEach(img => {
 			const ext = img.substring('data:image/'.length, img.indexOf(';base64'));
 			const fileName = `images/${uuid()}.${ext}`;
 			fileNameArr.push(fileName);
+			// images폴더에 파일로 저장
 			fs.writeFile(fileName, img.replace(/^data:image\/[^;]+;base64,/, ''), 'base64', err => {
 				console.log(err);
 			});
 		});
 
-		const removeImgHtml = contents.replace(/<img[^>]*>/g, `[[image]]`);
+		const removeImgHtml = fileNameArr.reduce((acc, file) => {
+			return acc.replace(
+				/<img src="(data:image\/[^;]+;base64[^"]+)[^>]*">/i,
+				`<img src='http://localhost:3001/${file}' alt='image'/>`,
+			);
+		}, contents);
 
 		// TODO: 트랜잭션 사용해야함!!!
 		const postResult = await prisma.post.create({
