@@ -63,7 +63,7 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 							loading={loadPostsLoading}
 							renderItem={(item: Post) => (
 								<List.Item>
-									<Link href={`/blog/post/${item.number}`}>
+									<Link href={`/blog/post/${item.id}`}>
 										<a css={titleStyle}>{item.title}</a>
 									</Link>
 									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>

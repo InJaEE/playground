@@ -50,7 +50,7 @@ const Blog = () => {
 									</Link>
 									{item.images.length > 0 && (
 										<img
-											width="162px"
+											css={previewImgStyle}
 											src={`http://localhost:3001/${item.images[0].path}`}
 											onError={(evt: SyntheticEvent<HTMLImageElement, Event>) => {
 												// ssr에서 작동안함
@@ -70,7 +70,7 @@ const Blog = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(async ctx => {
-	await ctx.store.dispatch(loadPosts());
+	await ctx.store.dispatch(loadPosts(ctx.query));
 	return { props: {} };
 });
 
@@ -97,6 +97,11 @@ const contentsStyle = css`
 		color: black;
 		cursor: pointer;
 	}
+`;
+
+const previewImgStyle = css`
+	max-height: 10em;
+	max-width: 10em;
 `;
 
 export default Blog;
