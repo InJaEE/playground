@@ -26,8 +26,8 @@ model post {
   views Int @default(0)
   created_at DateTime @default(now())
   updated_at DateTime?
+  category category @relation(fields: [category_id], references: [id])
   category_id String
-  code_info category @relation(fields: [category_id], references: [id])
   images image[]
   comments comment[]
   like like[]

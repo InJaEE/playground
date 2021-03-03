@@ -41,7 +41,7 @@ const Blog = () => {
 								}}
 							>
 								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-									<div className="ant-list-item-meta-description">{item.code_info.name}</div>
+									<div className="ant-list-item-meta-description">{item.category.name}</div>
 									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>
 								</div>
 								<List.Item.Meta title={<span css={titleStyle}>{item.title}</span>} />

@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 	const { title, category } = req.query as Query;
 	const result = await prisma.post.findMany({
 		include: {
-			code_info: true,
+			category: true,
 			images: true,
 		},
 		orderBy: {
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 		},
 		where: {
 			title: { contains: title },
-			code_info: {
+			category: {
 				name: category,
 			},
 		},

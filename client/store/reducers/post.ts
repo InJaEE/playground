@@ -16,7 +16,7 @@ export type Post = {
 	images: Image[];
 	created_at: string;
 	number: number;
-	code_info: {
+	category: {
 		id: string;
 		name: string;
 		type: string;
@@ -49,7 +49,8 @@ const initialState: InitialState = {
 	post: {
 		title: '',
 		contents: '',
-		code_info: {
+		category_id: '',
+		category: {
 			id: '',
 			name: '',
 			type: '',
