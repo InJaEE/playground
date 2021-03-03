@@ -38,9 +38,17 @@ export const addPost = createAsyncThunk('post/addPost', async (data: AddPost, th
 	} catch (err) {}
 });
 
-export const updatePost = createAsyncThunk('post/updatePost', async (data, thunkAPI) => {
-	try {
-		const res = await instance.put('/', data);
-		return res.data;
-	} catch (err) {}
-});
+type UpdatePost = {
+	post: AddPost;
+	postId: string;
+};
+
+export const updatePost = createAsyncThunk(
+	'post/updatePost',
+	async (data: UpdatePost, thunkAPI) => {
+		try {
+			const res = await instance.put(`/${data.postId}`, data.post);
+			return res.data;
+		} catch (err) {}
+	},
+);

@@ -7,12 +7,11 @@ import BlogLayout from '@/layouts/Blog';
 import { TuiEditorWithForwardedProps } from '@/components/Editor';
 import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost, loadPost } from '@/store/actions/post';
+import { updatePost, loadPost } from '@/store/actions/post';
 import { getCategories } from '@/store/actions/category';
 import { Input, Select, Row, Col, Button } from 'antd';
 import { css } from '@emotion/react';
 import { InitState } from '@/store/reducers';
-import htmlParse from 'html-react-parser';
 
 // https://myeongjae.kim/blog/2020/04/05/tui-editor-with-nextjs
 // ssr과 props관련 이슈 위 주소 참고
@@ -37,7 +36,6 @@ type Category = {
 
 const EditPost = () => {
 	const { post, loadPostLoading } = useSelector((state: InitState) => state.post);
-	console.log('POST:::', post);
 	const [title, setTitle] = useState('');
 	const [contents, setContents] = useState<string | undefined>('');
 	const [category, setCategory] = useState('');
@@ -60,13 +58,11 @@ const EditPost = () => {
 		// editorRef.current?.getInstance().setMarkdown(post.contents);
 		editorRef.current?.getInstance().setHtml(post.contents);
 		setCategory(post.category_id);
-		console.log('categoryRef', categoryRef);
 	}, [post, editorRef.current]);
 
 	const handleEditor = useCallback(() => {
 		const instance = editorRef.current?.getInstance();
 		setContents(instance?.getHtml());
-		console.log('@', instance?.getMarkdown());
 	}, [editorRef]);
 
 	const onOkHandler = useCallback(async () => {
@@ -82,7 +78,11 @@ const EditPost = () => {
 			alert('내용을 입력해주세요.');
 			return;
 		}
-		const res = await dispatch(addPost({ title, contents, category_id: category }));
+		const params = {
+			post: { title, contents, category_id: category },
+			postId: router.query.postId as string,
+		};
+		const res = await dispatch(updatePost(params));
 		router.back();
 	}, [category, title, contents]);
 
