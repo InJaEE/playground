@@ -1,5 +1,6 @@
 import schedule from 'node-schedule';
 // import { crawlEplPlayerData } from '@/crawler/epl.crawler';
+import { deleteNoneExistsImage } from '@/schedule/blog.schedule';
 
 export default () => {
 	schedule.scheduleJob('0 * * * * * ', () => {
@@ -22,6 +23,7 @@ export default () => {
 		console.log('Schedule run! 5 * * * * * ', new Date().getSeconds());
 	});
 	schedule.scheduleJob('30 * * * * * ', () => {
+		// deleteNoneExistsImage();
 		console.log('Schedule run! 30 * * * * *');
 	});
 };

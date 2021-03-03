@@ -4,7 +4,7 @@ import router from '@/router/index';
 import prisma from '@/database';
 import logger from '@/utils/logger';
 import morgan from 'morgan';
-import schedule from '@/schedule/rank';
+import schedule from '@/schedule';
 import cors from 'cors';
 
 const app = express();
