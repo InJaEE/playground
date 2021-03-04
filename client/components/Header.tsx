@@ -59,7 +59,7 @@ const Header = ({ isMain }: Props) => {
 						<a>Info</a>
 					</Link>
 				</div>
-				<div>
+				<div css={moreButtonStyle}>
 					<MenuOutlined onClick={() => setShowMobileHeader(!showMobileHeader)} />
 					{showMobileHeader && <MobileMenu setShowMobileHeader={setShowMobileHeader} />}
 				</div>

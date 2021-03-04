@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { css } from '@emotion/react';
 import { Divider } from 'antd';
 import { GoogleOutlined, GithubFilled } from '@ant-design/icons';
+import { AiFillYoutube } from 'react-icons/ai';
 
 type Props = {
 	setShowMobileHeader: Function;
@@ -24,6 +25,11 @@ const MobileMenu = ({ setShowMobileHeader }: Props) => {
 								<GoogleOutlined />
 							</a>
 						</Link>
+						<Link href="https://www.youtube.com">
+							<a target="_blank" rel="noreferrer">
+								<AiFillYoutube />
+							</a>
+						</Link>
 						<Link href="https://github.com/InJaEE">
 							<a target="_blank" rel="noreferrer">
 								<GithubFilled />
@@ -31,37 +37,36 @@ const MobileMenu = ({ setShowMobileHeader }: Props) => {
 						</Link>
 					</div>
 					<div css={menuMain}>
-						<div>
-							<Link href="/blog">
+						<Link href="/blog">
+							<div>
 								<a>Blog</a>
-							</Link>
-						</div>
-						<div>
-							<Link href="/devMemo">
+							</div>
+						</Link>
+						<Link href="/devMemo">
+							<div>
 								<a>DevMemo</a>
-							</Link>
-						</div>
-						<div>
-							<Link href="/sports">
+							</div>
+						</Link>
+						<Link href="/sports">
+							<div>
 								<a>Sports</a>
-							</Link>
-						</div>
-						<div>
-							<Link href="/stock">
+							</div>
+						</Link>
+						<Link href="/stock">
+							<div>
 								<a>Stock</a>
-							</Link>
-						</div>
-						<div>
-							<Link href="/music">
+							</div>
+						</Link>
+						<Link href="/music">
+							<div>
 								<a>Music</a>
-							</Link>
-						</div>
-						<Divider />
-						<div>
-							<Link href="/info">
+							</div>
+						</Link>
+						<Link href="/info">
+							<div>
 								<a>Info</a>
-							</Link>
-						</div>
+							</div>
+						</Link>
 					</div>
 				</div>
 			</nav>
@@ -96,7 +101,11 @@ const linkArea = css`
 	border-top: 1px solid lightgray;
 	border-bottom: 1px solid lightgray;
 	background-color: white;
+	display: flex;
+	align-items: center;
 	& a {
+		align-items: center;
+		display: flex;
 		margin-right: 1rem;
 	}
 `;
@@ -123,10 +132,13 @@ const menuMain = css`
 	background-color: white;
 	flex: 1 1 0%;
 	overflow-y: auto;
-	padding: 12px 24px;
+	padding: 12px 0;
 	& div {
 		font-size: 1.2rem;
-		margin: 12px 0;
+		padding: 12px 24px;
+	}
+	& div:hover {
+		background-color: lightgray;
 	}
 `;
 

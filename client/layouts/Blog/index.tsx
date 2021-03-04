@@ -6,6 +6,7 @@ import { headerStyle, writeButtonStyle, childrenColStyle } from './style';
 import { SiTypescript, SiJavascript } from 'react-icons/si';
 import { HiDesktopComputer } from 'react-icons/hi';
 import { MdCreate } from 'react-icons/md';
+import { css } from '@emotion/react';
 const { SubMenu } = Menu;
 
 type Props = {
@@ -22,13 +23,21 @@ const BlogLayout = ({ children }: Props) => {
 	);
 	return (
 		<>
+			<Col md={0} sm={16} xs={16} offset={4}>
+				<div css={mobilNavbar}>
+					<Link href="/blog">전체</Link>
+					<Link href={{ pathname: '/blog', query: { category: 'Typescript' } }}>Typescript</Link>
+					<Link href={{ pathname: '/blog', query: { category: 'Javascript' } }}>Javscript</Link>
+					<Link href={{ pathname: '/blog', query: { category: 'CS' } }}>ComputerScience</Link>
+				</div>
+			</Col>
 			<Row css={headerStyle}>
 				<Col md={8} offset={8}>
 					<Input.Search placeholder="INJAE's Blog" onSearch={searchHandler} />
 				</Col>
 			</Row>
 			<Row>
-				<Col md={4} sm={3} xs={0} offset={4}>
+				<Col md={4} sm={0} xs={0} offset={4}>
 					<Menu mode="inline" defaultOpenKeys={['sub1']} style={{ backgroundColor: 'inherit' }}>
 						<Menu.Item>
 							<Link href="/blog">전체</Link>
@@ -54,7 +63,7 @@ const BlogLayout = ({ children }: Props) => {
 						</SubMenu>
 					</Menu>
 				</Col>
-				<Col md={12} sm={16} xs={24} css={childrenColStyle}>
+				<Col md={12} sm={24} xs={24} css={childrenColStyle}>
 					{children}
 				</Col>
 			</Row>
@@ -65,17 +74,14 @@ const BlogLayout = ({ children }: Props) => {
 	);
 };
 
-const listData: any = [];
-for (let i = 0; i < 23; i++) {
-	listData.push({
-		href: 'https://ant.design',
-		title: `ant design part ${i}`,
-		avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-		description:
-			'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-		content:
-			'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-	});
-}
+const mobilNavbar = css`
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 24px;
+	& a {
+		color: black;
+		font-weight: bold;
+	}
+`;
 
 export default BlogLayout;
