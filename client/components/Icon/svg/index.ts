@@ -1,3 +1,3 @@
-// import cs from './cs.svg';
+import { ReactComponent as arrowRight } from './arrow_right.svg';
 
-// export { cs };
+export { arrowRight };

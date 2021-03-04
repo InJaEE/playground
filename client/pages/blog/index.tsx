@@ -30,6 +30,9 @@ const Blog = () => {
 						style: { textAlign: 'center' },
 					}}
 					dataSource={posts}
+					locale={{
+						emptyText: <strong>게시글이 존재하지 않습니다.</strong>,
+					}}
 					renderItem={(item: Post) => {
 						return loadPostsLoading ? (
 							<Skeleton active />

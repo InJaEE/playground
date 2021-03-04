@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { MenuOutlined } from '@ant-design/icons';
+import MobileMenu from '@/components/MobileMenu';
 
 type Props = {
 	isMain: boolean;
 };
 
 const Header = ({ isMain }: Props) => {
-	const infoRef = useRef();
 	const [statePageYOffset, setPageYOffset] = useState(0);
 	const [hide, setHide] = useState(false);
+	const [showMobileHeader, setShowMobileHeader] = useState(false);
 	const handleScroll = useCallback(() => {
 		const { pageYOffset } = window;
 		const deltaY = pageYOffset - statePageYOffset;
@@ -52,9 +54,15 @@ const Header = ({ isMain }: Props) => {
 				</div>
 			</div>
 			<div>
-				<Link href="/info">
-					<a>Info</a>
-				</Link>
+				<div css={infoStyle}>
+					<Link href="/info">
+						<a>Info</a>
+					</Link>
+				</div>
+				<div>
+					<MenuOutlined onClick={() => setShowMobileHeader(!showMobileHeader)} />
+					{showMobileHeader && <MobileMenu setShowMobileHeader={setShowMobileHeader} />}
+				</div>
 			</div>
 		</HeaderWrapper>
 	);
@@ -100,11 +108,27 @@ const menuStyle = css`
 	& a:hover {
 		color: #6b90b1;
 	}
+	@media screen and (max-width: 790px) {
+		display: none;
+	}
 `;
 
 const logoFont = css`
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	font-size: 1.2rem;
+`;
+
+const infoStyle = css`
+	@media screen and (max-width: 790px) {
+		display: none;
+	}
+`;
+
+const moreButtonStyle = css`
+	cursor: pointer;
+	@media screen and (min-width: 790px) {
+		display: none;
+	}
 `;
 
 export default Header;
