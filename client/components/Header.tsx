@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, MouseEvent } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { MenuOutlined } from '@ant-design/icons';
 import MobileMenu from '@/components/MobileMenu';
+import AdminLogin from '@/components/AdminLogin';
 
 type Props = {
 	isMain: boolean;
@@ -13,6 +15,18 @@ const Header = ({ isMain }: Props) => {
 	const [statePageYOffset, setPageYOffset] = useState(0);
 	const [hide, setHide] = useState(false);
 	const [showMobileHeader, setShowMobileHeader] = useState(false);
+	const [showAdminLogin, setShowAdminLogin] = useState(false);
+	const router = useRouter();
+
+	const handleLogoClick = () => {
+		router.push('/');
+	};
+
+	const handleLogoContext = (evt: MouseEvent<HTMLDivElement>) => {
+		evt.preventDefault();
+		setShowAdminLogin(true);
+	};
+
 	const handleScroll = useCallback(() => {
 		const { pageYOffset } = window;
 		const deltaY = pageYOffset - statePageYOffset;
@@ -29,12 +43,12 @@ const Header = ({ isMain }: Props) => {
 	return (
 		<HeaderWrapper isMain={isMain} hide={hide}>
 			<div css={header}>
-				<Link href="/">
+				<div onClick={handleLogoClick} onContextMenu={handleLogoContext}>
 					<a css={logoFont}>
 						<div>INJAE'S</div>
 						<div>PLAYGROUND</div>
 					</a>
-				</Link>
+				</div>
 				<div css={menuStyle}>
 					<Link href="/blog">
 						<a>Blog</a>
@@ -64,6 +78,7 @@ const Header = ({ isMain }: Props) => {
 					{showMobileHeader && <MobileMenu setShowMobileHeader={setShowMobileHeader} />}
 				</div>
 			</div>
+			{showAdminLogin && <AdminLogin setShowAdminLogin={setShowAdminLogin} />}
 		</HeaderWrapper>
 	);
 };

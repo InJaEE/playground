@@ -16,6 +16,7 @@ import Comment, { CommentInfo } from '@/components/Comment';
 
 const Content = () => {
 	const { post, loadPostLoading } = useSelector((state: InitState) => state.post);
+	const { isAdmin } = useSelector((state: InitState) => state.user);
 	// comments는 SWR 사용할까?
 	const { comments, getCommentsLoading, total } = useSelector((state: InitState) => state.comment);
 	const router = useRouter();
@@ -42,12 +43,16 @@ const Content = () => {
 					좋아요
 				</Button>
 				<div>
-					<Button onClick={onModifyHandler} css={modifyButtonStyle}>
-						수정
-					</Button>
-					<Button onClick={onDeleteHandler} danger>
-						삭제
-					</Button>
+					{isAdmin && (
+						<>
+							<Button onClick={onModifyHandler} css={modifyButtonStyle}>
+								수정
+							</Button>
+							<Button onClick={onDeleteHandler} danger>
+								삭제
+							</Button>
+						</>
+					)}
 				</div>
 			</div>
 			<Divider />

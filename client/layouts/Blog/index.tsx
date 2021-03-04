@@ -1,6 +1,8 @@
 import React, { ReactNode, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { InitState } from '@/store/reducers/index';
 import { Row, Col, Input, Menu, Button } from 'antd';
 import { headerStyle, writeButtonStyle, childrenColStyle } from './style';
 import { SiTypescript, SiJavascript } from 'react-icons/si';
@@ -14,6 +16,7 @@ type Props = {
 };
 
 const BlogLayout = ({ children }: Props) => {
+	const { isAdmin } = useSelector((state: InitState) => state.user);
 	const router = useRouter();
 	const searchHandler = useCallback(
 		(value: string) => {
@@ -67,9 +70,11 @@ const BlogLayout = ({ children }: Props) => {
 					{children}
 				</Col>
 			</Row>
-			<Link href="/blog/write">
-				<Button css={writeButtonStyle} icon={<MdCreate />} />
-			</Link>
+			{isAdmin && (
+				<Link href="/blog/write">
+					<Button css={writeButtonStyle} icon={<MdCreate />} />
+				</Link>
+			)}
 		</>
 	);
 };
