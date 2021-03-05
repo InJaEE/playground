@@ -39,14 +39,19 @@ const EditPost = () => {
 	const [title, setTitle] = useState('');
 	const [contents, setContents] = useState<string | undefined>('');
 	const [category, setCategory] = useState('');
-	const { categories } = useSelector((state: any) => state.category);
+	const { categories } = useSelector((state: InitState) => state.category);
+	const { isAdmin } = useSelector((state: InitState) => state.user);
 
-	const categoryRef = useRef();
 	const editorRef = useRef<EditorType>();
 	const router = useRouter();
 	const { postId } = router.query;
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		if (!isAdmin) {
+			router.back();
+		}
+	}, [isAdmin]);
 	useEffect(() => {
 		dispatch(getCategories());
 		dispatch(loadPost(postId));
@@ -54,7 +59,6 @@ const EditPost = () => {
 	useEffect(() => {
 		setTitle(post.title);
 		//setContents(htmlParse(post.contents) as string);
-
 		// editorRef.current?.getInstance().setMarkdown(post.contents);
 		editorRef.current?.getInstance().setHtml(post.contents);
 		setCategory(post.category_id);

@@ -9,6 +9,7 @@ import { Editor as EditorType, EditorProps } from '@toast-ui/react-editor';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '@/store/actions/post';
 import { getCategories } from '@/store/actions/category';
+import { InitState } from '@/store/reducers/index';
 import { Input, Select, Row, Col, Button } from 'antd';
 import { css } from '@emotion/react';
 
@@ -37,11 +38,18 @@ const Write = () => {
 	const [title, setTitle] = useState('');
 	const [contents, setContents] = useState<string | undefined>('');
 	const [category, setCategory] = useState('');
-	const { categories } = useSelector((state: any) => state.category);
+	const { categories } = useSelector((state: InitState) => state.category);
+	const { isAdmin } = useSelector((state: InitState) => state.user);
 
 	const editorRef = useRef<EditorType>();
 	const router = useRouter();
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (!isAdmin) {
+			router.back();
+		}
+	}, [isAdmin]);
 
 	useEffect(() => {
 		dispatch(getCategories());
