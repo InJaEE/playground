@@ -11,6 +11,7 @@ import YoutubeSlick from '@/components/YoutubeSlick';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { InitState } from '@/store/reducers/index';
+import { setAdmin } from '@/store/actions/user';
 
 export type YoutubeVideo = {
 	etag: string;
@@ -42,6 +43,7 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 	const { posts, loadPostsLoading } = useSelector((state: InitState) => state.post);
 	const [blogPost, setBlogPost] = useState(posts);
 	useEffect(() => {
+		dispatch(setAdmin());
 		dispatch(loadPosts());
 	}, [dispatch]);
 	useEffect(() => {

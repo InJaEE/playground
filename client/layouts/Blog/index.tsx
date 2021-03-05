@@ -35,7 +35,7 @@ const BlogLayout = ({ children }: Props) => {
 				</div>
 			</Col>
 			<Row css={headerStyle}>
-				<Col md={8} offset={8}>
+				<Col md={8} xs={24} css={marginAuto}>
 					<Input.Search placeholder="INJAE's Blog" onSearch={searchHandler} />
 				</Col>
 			</Row>
@@ -70,7 +70,7 @@ const BlogLayout = ({ children }: Props) => {
 					{children}
 				</Col>
 			</Row>
-			{isAdmin && (
+			{!isAdmin && (
 				<Link href="/blog/write">
 					<Button css={writeButtonStyle} icon={<MdCreate />} />
 				</Link>
@@ -82,11 +82,16 @@ const BlogLayout = ({ children }: Props) => {
 const mobilNavbar = css`
 	display: flex;
 	justify-content: space-around;
+	flex-wrap: wrap;
 	margin-bottom: 24px;
 	& a {
 		color: black;
 		font-weight: bold;
 	}
+`;
+
+const marginAuto = css`
+	margin: auto;
 `;
 
 export default BlogLayout;

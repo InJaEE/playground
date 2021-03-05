@@ -45,11 +45,11 @@ const Write = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		if (!isAdmin) {
-			router.back();
-		}
-	}, [isAdmin]);
+	// useEffect(() => {
+	// 	if (!isAdmin) {
+	// 		router.back();
+	// 	}
+	// }, [isAdmin]);
 
 	useEffect(() => {
 		dispatch(getCategories());

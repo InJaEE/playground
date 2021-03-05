@@ -1,23 +1,22 @@
 import { Router } from 'express';
 import prisma from '@/database';
-import bcrypt from 'bcrypt';
+import passport from 'passport';
 const router = Router();
 
-router.post('/login', async (req, res) => {
-	const { password } = req.body;
-
-	const admin = await prisma.user.findFirst({
-		where: {
-			role: 'admin',
-		},
-	});
-
-	const confirmPassword = await bcrypt.compare(password, admin.password);
-	if (confirmPassword) {
-		res.json({ success: true });
-	} else {
-		res.json({ error: true });
-	}
+router.post('/login', async (req, res, next) => {
+	passport.authenticate('local', (err, isAdmin) => {
+		console.log('isAdmin', isAdmin);
+		if (err) {
+			return next(err);
+		}
+		return req.login(isAdmin, loginError => {
+			if (loginError) {
+				console.error(loginError);
+				return next(loginError);
+			}
+			res.json({ user: isAdmin });
+		});
+	})(req, res, next);
 });
 
 // router.post('/createUser', async (req, res) => {
