@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadPosts, loadPost, addPost } from '@/store/actions/post';
+import { loadPosts, loadPost, addPost, updatePost, deletePost } from '@/store/actions/post';
 
 type Image = {
 	id: string;
@@ -36,6 +36,12 @@ export type InitialState = {
 	addPostLoading: boolean;
 	addPostDone: boolean;
 	addPostError: null | string;
+	updatePostLoading: boolean;
+	updatePostDone: boolean;
+	updatePostError: null | string;
+	deletePostLoading: boolean;
+	deletePostDone: boolean;
+	deletePostError: null | string;
 };
 
 const initialState: InitialState = {
@@ -65,6 +71,12 @@ const initialState: InitialState = {
 	addPostLoading: false,
 	addPostDone: false,
 	addPostError: null,
+	updatePostLoading: false,
+	updatePostDone: false,
+	updatePostError: null,
+	deletePostLoading: false,
+	deletePostDone: false,
+	deletePostError: null,
 };
 
 const postSlice = createSlice({
@@ -90,13 +102,11 @@ const postSlice = createSlice({
 				state.loadPostsError = action.error.message!;
 			})
 			.addCase(loadPost.pending, state => {
-				console.log('loadPosts.pending');
 				state.loadPostLoading = true;
 				state.loadPostDone = false;
 				state.loadPostError = null;
 			})
 			.addCase(loadPost.fulfilled, (state, action) => {
-				console.log('loadPosts.fulfilled');
 				state.loadPostLoading = false;
 				state.loadPostDone = true;
 				state.post = action.payload.result;
@@ -117,6 +127,32 @@ const postSlice = createSlice({
 			.addCase(addPost.rejected, (state, action) => {
 				state.addPostLoading = false;
 				state.addPostError = action.error.message!;
+			})
+			.addCase(updatePost.pending, (state, action) => {
+				state.updatePostDone = false;
+				state.updatePostLoading = true;
+				state.updatePostError = null;
+			})
+			.addCase(updatePost.fulfilled, (state, action) => {
+				state.updatePostDone = true;
+				state.updatePostLoading = false;
+			})
+			.addCase(updatePost.rejected, (state, action) => {
+				state.updatePostLoading = false;
+				state.updatePostError = action.error.message!;
+			})
+			.addCase(deletePost.pending, (state, action) => {
+				state.deletePostDone = false;
+				state.deletePostLoading = true;
+				state.deletePostError = null;
+			})
+			.addCase(deletePost.fulfilled, (state, action) => {
+				state.deletePostDone = true;
+				state.deletePostLoading = false;
+			})
+			.addCase(deletePost.rejected, (state, action) => {
+				state.deletePostLoading = false;
+				state.deletePostError = action.error.message!;
 			});
 	},
 });

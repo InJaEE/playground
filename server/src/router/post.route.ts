@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
 			category: {
 				name: category,
 			},
+			use_yn: 'Y',
 		},
 	});
 	// prisma.image.findMany({
@@ -32,7 +33,6 @@ router.get('/', async (req, res) => {
 
 	// 	}
 	// })
-
 	res.json({ result });
 });
 
@@ -173,5 +173,18 @@ const base64ImgProcess = (contents, imgArr) => {
 
 	return [removeBase64Contents, fileNameArr];
 };
+
+router.delete('/:postId', async (req, res) => {
+	const { postId } = req.params;
+	const result = await prisma.post.update({
+		data: {
+			use_yn: 'N',
+		},
+		where: {
+			id: Number(postId),
+		},
+	});
+	res.json({ result });
+});
 
 export default router;

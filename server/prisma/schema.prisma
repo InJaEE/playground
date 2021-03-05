@@ -24,6 +24,7 @@ model post {
   title String
   contents String
   views Int @default(0)
+  use_yn String @default("Y")
   created_at DateTime @default(now())
   updated_at DateTime?
   category category @relation(fields: [category_id], references: [id])

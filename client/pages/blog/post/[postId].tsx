@@ -1,8 +1,8 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadPost } from '@/store/actions/post';
+import { loadPost, deletePost } from '@/store/actions/post';
 import wrapper from '@/store/';
 import BlogLayout from '@/layouts/Blog';
 import { InitState } from '@/store/reducers';
@@ -21,10 +21,19 @@ const Content = () => {
 	const { comments, getCommentsLoading, total } = useSelector((state: InitState) => state.comment);
 	const router = useRouter();
 	const dispatch = useDispatch();
+
 	const onModifyHandler = useCallback(() => {
 		router.push(`/blog/edit/${post.id}`);
 	}, [post]);
-	const onDeleteHandler = useCallback(() => {}, []);
+	const onDeleteHandler = useCallback(async () => {
+		const flag = confirm('정말 삭제하시겠습니까?');
+		if (!flag) return;
+		const params = {
+			postId: router.query.postId as string,
+		};
+		const res = await dispatch(deletePost(params));
+		router.push('/blog');
+	}, []);
 
 	useEffect(() => {
 		dispatch(getComments({ postId: post.id }));
