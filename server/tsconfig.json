@@ -22,9 +22,12 @@
 		"emitDecoratorMetadata": true,
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
+		"typeRoots": ["./node_modules/@types", "./src/types/custom.d.ts"],
+		"declaration": true,
 		"paths": {
 			"@/*": ["src/*"]
 		},
 		"lib": ["es5", "es6", "ES2020"]
 	}
+	// "files": ["./src/types/custom.d.ts"]
 }

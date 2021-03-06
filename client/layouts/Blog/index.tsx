@@ -33,8 +33,7 @@ const BlogLayout = ({ children }: Props) => {
 				withCredentials: true,
 			});
 			if (data.isAdmin) {
-				const a = dispatch(userSlice.actions.setAdmin());
-				console.log('%$#%$', a);
+				dispatch(userSlice.actions.setAdmin());
 			}
 		};
 		checkSession();

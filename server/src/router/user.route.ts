@@ -15,7 +15,7 @@ router.post('/login', async (req, res, next) => {
 				console.error(loginError);
 				return next(loginError);
 			}
-			res.json({ isAdmin });
+			res.returnSuccess({ isAdmin });
 		});
 	})(req, res, next);
 });
@@ -35,9 +35,9 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/sessionCheck', async (req: requestWithSession, res) => {
 	if (req.user?.isAdmin) {
-		res.json({ isAdmin: true });
+		res.returnSuccess({ isAdmin: true });
 	} else {
-		res.json({ isAdmin: false });
+		res.returnSuccess({ isAdmin: false });
 	}
 });
 

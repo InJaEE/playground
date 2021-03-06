@@ -46,6 +46,19 @@ passportConfig();
 
 app.use('/api', router);
 
+app.response.returnSuccess = function (data) {
+	return this.status(200).json({
+		error: false,
+		...data,
+	});
+};
+app.response.returnError = function (status, message) {
+	return this.status(status).json({
+		error: true,
+		message,
+	});
+};
+
 prisma.$connect().then(() => {
 	logger.info('Prisma connected!');
 	schedule();
