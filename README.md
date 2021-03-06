@@ -1,17 +1,25 @@
 # Playground
 
-## 혼자 해보고 싶은것들을 마음대로 적용해보는 웹사이트입니다.
+## Info
+
+해보고 싶은것들을 마음대로 적용해보는 개인 프로젝트입니다.
 
 ## Tech Stack
 
-### Typescript
+### Backend
 
-### Next
+- Typescript
+- Express
+- PostgreSQL
+- Prisma(ORM)
 
-### Express
+### Frontend
 
-### Prisma
+- Typescript
+- Next
+- Redux ToolKit
+- Emotion
 
-### Emotion
+### Devops
 
-### Naver Cloud Platform Micro(Database)
+- Naver Cloud Platform
