@@ -1,14 +1,16 @@
-import React, { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { InitState } from '@/store/reducers/index';
+import axios from 'axios';
 import { Row, Col, Input, Menu, Button } from 'antd';
 import { headerStyle, writeButtonStyle, childrenColStyle } from './style';
 import { SiTypescript, SiJavascript } from 'react-icons/si';
 import { HiDesktopComputer } from 'react-icons/hi';
 import { MdCreate } from 'react-icons/md';
 import { css } from '@emotion/react';
+import userSlice from '@/store/reducers/user';
 const { SubMenu } = Menu;
 
 type Props = {
@@ -18,12 +20,25 @@ type Props = {
 const BlogLayout = ({ children }: Props) => {
 	const { isAdmin } = useSelector((state: InitState) => state.user);
 	const router = useRouter();
+	const dispatch = useDispatch();
 	const searchHandler = useCallback(
 		(value: string) => {
 			router.push({ pathname: '/blog', query: { title: value } });
 		},
 		[router],
 	);
+	useEffect(() => {
+		const checkSession = async () => {
+			const { data } = await axios.post('http://localhost:3001/api/user/sessionCheck', null, {
+				withCredentials: true,
+			});
+			if (data.isAdmin) {
+				const a = dispatch(userSlice.actions.setAdmin());
+				console.log('%$#%$', a);
+			}
+		};
+		checkSession();
+	}, [router]);
 	return (
 		<>
 			<Col md={0} sm={16} xs={16} offset={4}>
@@ -70,7 +85,7 @@ const BlogLayout = ({ children }: Props) => {
 					{children}
 				</Col>
 			</Row>
-			{!isAdmin && (
+			{isAdmin && (
 				<Link href="/blog/write">
 					<Button css={writeButtonStyle} icon={<MdCreate />} />
 				</Link>

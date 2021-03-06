@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from 'react';
 import { useRouter } from 'next/router';
-import { useSelector, useStore } from 'react-redux';
+import { useSelector } from 'react-redux';
 import BlogLayout from '@/layouts/Blog';
 import { List, Skeleton } from 'antd';
 import { loadPosts } from '@/store/actions/post';

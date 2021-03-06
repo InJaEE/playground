@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const instance = axios.create({
 	baseURL: `http://localhost:3001/api/user`,
@@ -10,5 +10,3 @@ export const login = createAsyncThunk('/user/login', async (data: { password: st
 	const res = await instance.post('/login', { email: 'in11202@naver.com', ...data });
 	return res.data;
 });
-
-export const setAdmin = createAction('user/admin');

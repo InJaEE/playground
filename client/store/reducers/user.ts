@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, setAdmin } from '@/store/actions/user';
+import { login } from '@/store/actions/user';
 
 export type InitialState = {
 	isAdmin: boolean;
@@ -21,8 +21,7 @@ const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setAdmin(state, action) {
-			console.log('@@@SET ADMIN');
+		setAdmin(state) {
 			state.isAdmin = true;
 		},
 	},
@@ -36,7 +35,7 @@ const userSlice = createSlice({
 			.addCase(login.fulfilled, (state, action) => {
 				state.loginLoading = false;
 				state.loginDone = true;
-				if (action.payload.success) {
+				if (action.payload.isAdmin) {
 					state.isAdmin = true;
 					state.isLoggedIn = true;
 				}
@@ -44,9 +43,6 @@ const userSlice = createSlice({
 			.addCase(login.rejected, (state, action) => {
 				state.loginLoading = false;
 				state.loginError = action.error.message!;
-			})
-			.addCase(setAdmin, () => {
-				console.log('setAdmin!!!');
 			});
 	},
 });

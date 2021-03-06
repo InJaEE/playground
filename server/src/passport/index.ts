@@ -1,8 +1,5 @@
 import passport from 'passport';
 import local from './localStrategy';
-import { Strategy as LocalStrategy } from 'passport-local';
-import prisma from '@/database';
-import bcrypt from 'bcrypt';
 
 export default () => {
 	passport.serializeUser(async (isAdmin, done) => {
@@ -11,7 +8,7 @@ export default () => {
 		});
 	});
 	passport.deserializeUser((isAdmin, done) => {
-		done(null, { isAdmin });
+		done(null, isAdmin);
 	});
 	local();
 };

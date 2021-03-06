@@ -18,7 +18,7 @@ const createStore = () => {
 };
 
 const wrapper = createWrapper(createStore, {
-	debug: true,
+	//debug: true,
 });
 
 export default wrapper;

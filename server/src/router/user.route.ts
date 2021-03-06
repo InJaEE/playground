@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import prisma from '@/database';
 import passport from 'passport';
+import requestWithSession from '@/types/requestWithSession';
 const router = Router();
 
 router.post('/login', async (req, res, next) => {
@@ -14,7 +15,7 @@ router.post('/login', async (req, res, next) => {
 				console.error(loginError);
 				return next(loginError);
 			}
-			res.json({ user: isAdmin });
+			res.json({ isAdmin });
 		});
 	})(req, res, next);
 });
@@ -31,5 +32,13 @@ router.post('/login', async (req, res, next) => {
 // 	});
 // 	res.send('GOOD');
 // });
+
+router.post('/sessionCheck', async (req: requestWithSession, res) => {
+	if (req.user?.isAdmin) {
+		res.json({ isAdmin: true });
+	} else {
+		res.json({ isAdmin: false });
+	}
+});
 
 export default router;
