@@ -33,12 +33,11 @@ router.get('/', async (req, res) => {
 
 	// 	}
 	// })
-	res.json({ result });
+	res.returnSuccess({ result });
 });
 
 router.get('/:postId', async (req, res) => {
 	const { postId } = req.params;
-	console.log('postId:', postId);
 	const result = await prisma.post.findFirst({
 		where: {
 			id: Number(postId),
@@ -54,7 +53,7 @@ router.get('/:postId', async (req, res) => {
 			// }
 		},
 	});
-	res.json({ result });
+	res.returnSuccess({ result });
 });
 
 router.post('/', async (req, res) => {
@@ -90,7 +89,7 @@ router.post('/', async (req, res) => {
 	}
 
 	// await prisma.$transaction();
-	res.json({ result: 'Success' });
+	res.returnSuccess({ result: 'Success' });
 });
 
 router.put('/:postId', async (req, res) => {
@@ -120,7 +119,6 @@ router.put('/:postId', async (req, res) => {
 		});
 
 		const result = await prisma.$transaction([postUpdate, imageUpdate]);
-		console.log(result);
 	} else {
 		const result = await prisma.post.update({
 			data: {
@@ -134,7 +132,7 @@ router.put('/:postId', async (req, res) => {
 		});
 	}
 
-	res.json({ result: 'Update Success' });
+	res.returnSuccess({ result: 'Update Success' });
 });
 
 /**
@@ -159,9 +157,7 @@ const base64ImgProcess = (contents, imgArr) => {
 		const fileName = `images/${uuid()}.${ext}`;
 		fileNameArr.push(fileName);
 		// images폴더에 파일로 저장
-		fs.writeFile(fileName, img.replace(/^data:image\/[^;]+;base64,/, ''), 'base64', err => {
-			console.log(err);
-		});
+		fs.writeFile(fileName, img.replace(/^data:image\/[^;]+;base64,/, ''), 'base64', err => {});
 	});
 
 	const removeBase64Contents = fileNameArr.reduce((acc, file) => {
@@ -184,7 +180,46 @@ router.delete('/:postId', async (req, res) => {
 			id: Number(postId),
 		},
 	});
-	res.json({ result });
+	res.returnSuccess({ result });
+});
+
+router.get('/like/:postId', async (req, res) => {
+	const { postId } = req.params;
+
+	const result = await prisma.like.findUnique({
+		where: {
+			ip_postId: {
+				ip: req.ip,
+				postId: Number(postId),
+			},
+		},
+	});
+	console.log(result);
+	res.returnSuccess({ result });
+});
+
+router.post('/like/:postId', async (req, res) => {
+	const { postId } = req.params;
+	const ip = req.ip;
+
+	try {
+		await prisma.like.create({
+			data: {
+				ip,
+				postId: Number(postId),
+			},
+		});
+	} catch (err) {
+		await prisma.like.delete({
+			where: {
+				ip_postId: {
+					ip,
+					postId: Number(postId),
+				},
+			},
+		});
+	}
+	res.returnSuccess();
 });
 
 export default router;

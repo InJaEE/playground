@@ -44,6 +44,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 passportConfig();
 
+app.use((req, res, next) => {
+	// console.log('req.id :', req.ip);
+	// const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	// console.log('ip: ', ip);
+	next();
+});
+
 app.use('/api', router);
 
 app.response.returnSuccess = function (data) {
@@ -62,7 +69,7 @@ app.response.returnError = function (status, message) {
 prisma.$connect().then(() => {
 	logger.info('Prisma connected!');
 	schedule();
-	app.listen(config.port, () => {
+	app.listen(config.port, '0.0.0.0', () => {
 		console.info(`\u001b[96mServer on port at\u001b[00m \u001b[93m${config.port}\u001b[00m`);
 	});
 });

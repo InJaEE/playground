@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadPosts, loadPost, addPost, updatePost, deletePost } from '@/store/actions/post';
+import {
+	loadPosts,
+	loadPost,
+	addPost,
+	updatePost,
+	deletePost,
+	loadLikePost,
+	islikedPost,
+} from '@/store/actions/post';
 
 type Image = {
 	id: string;
@@ -42,6 +50,12 @@ export type InitialState = {
 	deletePostLoading: boolean;
 	deletePostDone: boolean;
 	deletePostError: null | string;
+	loadLikePostLoading: boolean;
+	loadLikePostDone: boolean;
+	loadLikePostError: null | string;
+	islikedPostLoading: boolean;
+	islikedPostDone: boolean;
+	islikedPostError: null | string;
 };
 
 const initialState: InitialState = {
@@ -77,14 +91,18 @@ const initialState: InitialState = {
 	deletePostLoading: false,
 	deletePostDone: false,
 	deletePostError: null,
+	loadLikePostLoading: false,
+	loadLikePostDone: false,
+	loadLikePostError: null,
+	islikedPostLoading: false,
+	islikedPostDone: false,
+	islikedPostError: null,
 };
 
 const postSlice = createSlice({
 	name: 'post',
 	initialState,
-	reducers: {
-		loadPost(state, action) {},
-	},
+	reducers: {},
 	extraReducers(builder) {
 		builder
 			.addCase(loadPosts.pending, state => {
@@ -153,6 +171,32 @@ const postSlice = createSlice({
 			.addCase(deletePost.rejected, (state, action) => {
 				state.deletePostLoading = false;
 				state.deletePostError = action.error.message!;
+			})
+			.addCase(loadLikePost.pending, (state, action) => {
+				state.loadLikePostDone = false;
+				state.loadLikePostLoading = true;
+				state.loadLikePostError = null;
+			})
+			.addCase(loadLikePost.fulfilled, (state, action) => {
+				state.loadLikePostDone = true;
+				state.loadLikePostLoading = false;
+			})
+			.addCase(loadLikePost.rejected, (state, action) => {
+				state.loadLikePostLoading = false;
+				state.loadLikePostError = action.error.message!;
+			})
+			.addCase(islikedPost.pending, (state, action) => {
+				state.islikedPostDone = false;
+				state.islikedPostLoading = true;
+				state.islikedPostError = null;
+			})
+			.addCase(islikedPost.fulfilled, (state, action) => {
+				state.islikedPostLoading = false;
+				state.islikedPostDone = true;
+			})
+			.addCase(islikedPost.rejected, (state, action) => {
+				state.islikedPostLoading = false;
+				state.islikedPostError = action.error.message!;
 			});
 	},
 });

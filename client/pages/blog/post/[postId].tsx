@@ -1,26 +1,34 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadPost, deletePost } from '@/store/actions/post';
+import { loadPost, deletePost, loadLikePost, islikedPost } from '@/store/actions/post';
 import wrapper from '@/store/';
 import BlogLayout from '@/layouts/Blog';
 import { InitState } from '@/store/reducers';
 import htmlParse from 'html-react-parser';
 import { Button, Divider } from 'antd';
-import { LikeOutlined } from '@ant-design/icons';
+import { LikeOutlined, LikeTwoTone } from '@ant-design/icons';
 import { css } from '@emotion/react';
 import CreateCommentForm from '@/components/CreateCommentForm';
 import { getComments } from '@/store/actions/comment';
 import Comment, { CommentInfo } from '@/components/Comment';
 
 const Content = () => {
-	const { post, loadPostLoading } = useSelector((state: InitState) => state.post);
+	const [like, setLike] = useState(false);
+	const { post, loadPostLoading, loadLikePostLoading } = useSelector(
+		(state: InitState) => state.post,
+	);
 	const { isAdmin } = useSelector((state: InitState) => state.user);
 	// comments는 SWR 사용할까?
 	const { comments, getCommentsLoading, total } = useSelector((state: InitState) => state.comment);
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const queryParams = useMemo(() => {
+		return {
+			postId: router.query.postId as string,
+		};
+	}, [router]);
 
 	const onModifyHandler = useCallback(() => {
 		router.push(`/blog/edit/${post.id}`);
@@ -28,16 +36,28 @@ const Content = () => {
 	const onDeleteHandler = useCallback(async () => {
 		const flag = confirm('정말 삭제하시겠습니까?');
 		if (!flag) return;
-		const params = {
-			postId: router.query.postId as string,
-		};
-		const res = await dispatch(deletePost(params));
+		const res = await dispatch(deletePost(queryParams));
 		router.push('/blog');
-	}, []);
-
+	}, [router]);
 	useEffect(() => {
-		dispatch(getComments({ postId: post.id }));
+		dispatch(getComments(queryParams));
 	}, [post]);
+
+	const onLikeHandler = useCallback(async () => {
+		const res = await dispatch(islikedPost(queryParams));
+		fetchLike();
+	}, [router]);
+	const fetchLike = useCallback(async () => {
+		const loadLikePostResult = await dispatch(loadLikePost(queryParams));
+		if (loadLikePostResult.payload.result) {
+			setLike(true);
+		} else {
+			setLike(false);
+		}
+	}, [queryParams]);
+	useEffect(() => {
+		fetchLike();
+	}, [like]);
 
 	return (
 		<BlogLayout>
@@ -47,9 +67,9 @@ const Content = () => {
 			<Divider />
 			<div css={buttonListStyle}>
 				<Button onClick={() => router.push('/blog')}>목록으로</Button>
-				<Button onClick={() => alert('준비중입니다.')}>
-					<LikeOutlined />
-					좋아요
+				<Button onClick={onLikeHandler} loading={loadLikePostLoading}>
+					{like ? <LikeTwoTone /> : <LikeOutlined />}
+					<span style={like ? { color: '#40a9ff' } : undefined}>좋아요</span>
 				</Button>
 				<div>
 					{isAdmin && (

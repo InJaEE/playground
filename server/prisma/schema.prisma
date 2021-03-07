@@ -81,11 +81,12 @@ model avatar {
 }
 
 model like {
-  id Int @id @default(autoincrement())
   ip String
   post post @relation(fields: [postId], references: [id])
-  postId Int
+  postId Int 
   created_at DateTime @default(now())
+
+  @@id([ip, postId])
 }
 
 model user {
