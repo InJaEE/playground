@@ -49,7 +49,7 @@ const BlogLayout = ({ children }: Props) => {
 				</div>
 			</Col>
 			<Row css={headerStyle}>
-				<Col md={8} xs={24} css={marginAuto}>
+				<Col md={6} xs={24} css={marginAuto}>
 					<Input.Search placeholder="INJAE's Blog" onSearch={searchHandler} />
 				</Col>
 			</Row>

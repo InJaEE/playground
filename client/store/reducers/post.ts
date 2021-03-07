@@ -15,6 +15,12 @@ type Image = {
 	postId: string;
 };
 
+type Like = {
+	ip: string;
+	postId: number;
+	created_at: Date;
+};
+
 export type Post = {
 	id: string;
 	title: string;
@@ -30,6 +36,7 @@ export type Post = {
 		type: string;
 		description?: string;
 	};
+	like: Like[];
 };
 
 export type InitialState = {

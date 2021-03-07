@@ -9,10 +9,12 @@ import { InitState } from '@/store/reducers';
 import htmlParse from 'html-react-parser';
 import { Button, Divider } from 'antd';
 import { LikeOutlined, LikeTwoTone } from '@ant-design/icons';
+import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import CreateCommentForm from '@/components/CreateCommentForm';
 import { getComments } from '@/store/actions/comment';
 import Comment, { CommentInfo } from '@/components/Comment';
+import dayjs from 'dayjs';
 
 const Content = () => {
 	const [like, setLike] = useState(false);
@@ -61,16 +63,21 @@ const Content = () => {
 
 	return (
 		<BlogLayout>
-			<h1>{post.title}</h1>
-			<hr />
+			<span css={postCategory}>{post.category.name}</span>
+			<div css={postTitle}>{post.title}</div>
+			{/* <div>{post.like.length}개의 추천</div> */}
+			<div css={postCreatedAt}>{dayjs(post.created_at).format('YYYY년 MM월 DD일 hh:mm')}</div>
+			<Divider />
 			<div css={mainContentsStyle}>{htmlParse(post.contents)}</div>
+			<LikeButtonWrapper like={like}>
+				<Button onClick={onLikeHandler} loading={loadLikePostLoading}>
+					{like ? <LikeTwoTone /> : <LikeOutlined />}
+					<span>좋아요</span>
+				</Button>
+			</LikeButtonWrapper>
 			<Divider />
 			<div css={buttonListStyle}>
 				<Button onClick={() => router.push('/blog')}>목록으로</Button>
-				<Button onClick={onLikeHandler} loading={loadLikePostLoading}>
-					{like ? <LikeTwoTone /> : <LikeOutlined />}
-					<span style={like ? { color: '#40a9ff' } : undefined}>좋아요</span>
-				</Button>
 				<div>
 					{isAdmin && (
 						<>
@@ -130,6 +137,32 @@ const modifyButtonStyle = css`
 
 const marginBottomStyle = css`
 	margin-bottom: 1.75rem;
+`;
+
+const postCategory = css`
+	background-color: #a7efcb;
+	padding: 0 8px;
+`;
+
+const postTitle = css`
+	font-size: 2rem;
+	font-weight: bold;
+`;
+
+const postCreatedAt = css`
+	color: rgb(107, 114, 128);
+	font-size: 0.75rem;
+`;
+
+type LikeButtonProps = {
+	like: boolean;
+};
+
+const LikeButtonWrapper = styled.div<LikeButtonProps>`
+	text-align: center;
+	& span {
+		${props => props.like && 'color: #40a9ff'}
+	}
 `;
 
 export default Content;

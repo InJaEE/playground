@@ -53,17 +53,17 @@ const CreateCommentForm = ({ postId, commentType, parentId }: Prop) => {
 	return (
 		<Form form={form} onFinish={onFinishHandler}>
 			<Row gutter={24} css={commentAccountAreaStyle}>
-				<Col md={4}>
+				<span>
 					<Avatar styleCollection={avatarStyle} />
 					<SyncOutlined css={randomButtonStyle} onClick={onClickHandler} />
-				</Col>
-				<Col md={10} xs={10}>
-					<Form.Item label="이메일" name="author_id">
+				</span>
+				<Col md={10} xs={24}>
+					<Form.Item name="author_id">
 						<Input type="email" prefix={<UserOutlined />} placeholder="이메일"></Input>
 					</Form.Item>
 				</Col>
-				<Col md={10} xs={10}>
-					<Form.Item label="비밀번호" name="author_pwd">
+				<Col md={10} xs={24}>
+					<Form.Item name="author_pwd">
 						<Input type="password" prefix={<LockOutlined />} placeholder="비밀번호"></Input>
 					</Form.Item>
 				</Col>
@@ -103,9 +103,7 @@ const commentInputAreaStyle = css`
 `;
 
 const randomButtonStyle = css`
-	position: absolute;
-	top: 2.25rem;
-	left: 3.25rem;
+	transform: translate(-16px, -2px);
 `;
 
 export default CreateCommentForm;

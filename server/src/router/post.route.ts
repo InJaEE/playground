@@ -44,13 +44,12 @@ router.get('/:postId', async (req, res) => {
 		},
 		include: {
 			images: true,
-			// comments: {
-			// 	include: {
-			// 		avatar: {
-
-			// 		}
-			// 	}
-			// }
+			category: true,
+			like: {
+				where: {
+					postId: Number(postId),
+				},
+			},
 		},
 	});
 	res.returnSuccess({ result });
