@@ -1,12 +1,11 @@
-import local from './local';
-import prod from './production';
-
-let config = {};
+let config = {
+	BACKEND_URL: '',
+};
 
 if (process.env.NODE_ENV === 'production') {
-	config = prod;
+	config.BACKEND_URL = process.env.NEXT_PUBLIC_PROD_BACKEND_URL as string;
 } else {
-	config = local;
+	config.BACKEND_URL = process.env.NEXT_PUBLIC_DEV_BACKEND_URL as string;
 }
 
 export default config;

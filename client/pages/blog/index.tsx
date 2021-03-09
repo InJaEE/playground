@@ -11,6 +11,7 @@ import { GetServerSideProps } from 'next';
 import { css } from '@emotion/react';
 import htmlParse from 'html-react-parser';
 import { InitState } from '@/store/reducers/index';
+import config from '@/config';
 
 const Blog = () => {
 	const { posts, loadPostsLoading } = useSelector((state: InitState) => state.post);
@@ -54,10 +55,10 @@ const Blog = () => {
 									{item.images.length > 0 && (
 										<img
 											css={previewImgStyle}
-											src={`http://localhost:3001/${item.images[0].path}`}
+											src={`${config.BACKEND_URL}/${item.images[0].path}`}
 											onError={(evt: SyntheticEvent<HTMLImageElement, Event>) => {
 												// ssr에서 작동안함
-												evt.currentTarget.src = 'http://localhost:3001/images/noimage.jpg';
+												evt.currentTarget.src = `${config.BACKEND_URL}/images/noimage.jpg`;
 											}}
 											alt="image"
 										/>
