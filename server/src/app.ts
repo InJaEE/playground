@@ -12,6 +12,8 @@ import cors from 'cors';
 import passport from 'passport';
 import passportConfig from '@/passport';
 
+require('dotenv').config();
+
 const app = express();
 const store = FileStore(session);
 
