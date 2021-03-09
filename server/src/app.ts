@@ -13,10 +13,9 @@ import passportConfig from '@/passport';
 import path from 'path';
 import appRoot from 'app-root-path';
 
-const dotEnvPath = path.join(
-	appRoot.path,
-	`.env${process.env.NODE_ENV === 'production' ? '.production' : ''}`,
-);
+const isProd = process.env.NODE_ENV === 'production';
+
+const dotEnvPath = path.join(appRoot.path, `.env${isProd ? '.production' : ''}`);
 
 require('dotenv').config({
 	path: dotEnvPath,
@@ -31,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(
 	cors({
-		origin: 'http://localhost:3000',
+		origin: isProd ? process.env.PROD_FRONTEND_URL : process.env.DEV_FRONTEND_URL,
 		credentials: true,
 	}),
 );
