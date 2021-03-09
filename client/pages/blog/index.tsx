@@ -55,10 +55,10 @@ const Blog = () => {
 									{item.images.length > 0 && (
 										<img
 											css={previewImgStyle}
-											src={`${config.BACKEND_URL}/${item.images[0].path}`}
+											src={`${config.IMG_URL}/${item.images[0].path}`}
 											onError={(evt: SyntheticEvent<HTMLImageElement, Event>) => {
 												// ssr에서 작동안함
-												evt.currentTarget.src = `${config.BACKEND_URL}/images/noimage.jpg`;
+												evt.currentTarget.src = `${config.IMG_URL}/images/noimage.jpg`;
 											}}
 											alt="image"
 										/>
