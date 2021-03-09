@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(
 	cors({
-		origin: isProd ? process.env.PROD_FRONTEND_URL : process.env.DEV_FRONTEND_URL,
+		origin: process.env.FRONTEND_URL,
 		credentials: true,
 	}),
 );
