@@ -27,7 +27,7 @@ export type YoutubeVideo = {
 		localized: object[];
 		publishedAt: string;
 		tags: string[];
-		thumbnails: object[];
+		thumbnails: any;
 		title: string;
 	};
 };
@@ -64,7 +64,7 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 							renderItem={(item: Post) => (
 								<List.Item>
 									<Link href={`/blog/post/${item.id}`}>
-										<a css={titleStyle}>{item.title}</a>
+										<span css={titleStyle}>{item.title}</span>
 									</Link>
 									<div>{dayjs(item.created_at).format('YYYY/MM/DD')}</div>
 								</List.Item>
@@ -75,10 +75,7 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 						<List header={<div>소식2</div>}></List>
 					</Col>
 				</Row>
-				<div css={youtubeWrapperStyle}>
-					<h2>Youtube {youtubeCategory}</h2>
-					<YoutubeSlick youtube={youtube} />
-				</div>
+				<YoutubeSlick youtube={youtube} youtubeCategory={youtubeCategory} />
 				<Row gutter={32}>
 					<Col xs={24} md={12}>
 						<List header={<div>소식4</div>}></List>
@@ -130,10 +127,7 @@ const titleStyle = css`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding-right: 1rem;
-`;
-
-const youtubeWrapperStyle = css`
-	margin: 32px 0;
+	cursor: pointer;
 `;
 
 export default Home;

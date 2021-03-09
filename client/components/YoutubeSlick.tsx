@@ -6,9 +6,10 @@ import { YoutubeVideo } from '@/pages/index';
 
 type Props = {
 	youtube: YoutubeVideo[];
+	youtubeCategory: string;
 };
 
-const YoutubeSlick = ({ youtube }: Props) => {
+const YoutubeSlick = ({ youtube, youtubeCategory }: Props) => {
 	const [showVideoZoom, setShowVideoZoom] = useState(false);
 	const [videoZoomSrc, setVideoZoomSrc] = useState('');
 	const showVideoHandler = (src: string) => {
@@ -16,7 +17,8 @@ const YoutubeSlick = ({ youtube }: Props) => {
 		setVideoZoomSrc(src);
 	};
 	return (
-		<>
+		<div css={youtubeWrapperStyle}>
+			<h2>Youtube {youtubeCategory}</h2>
 			<Carousel
 				swipeable
 				draggable
@@ -35,7 +37,7 @@ const YoutubeSlick = ({ youtube }: Props) => {
 				itemClass="carousel-item-padding-40-px"
 				css={customCss}
 			>
-				{youtube.map((item: any) => (
+				{youtube.map((item: YoutubeVideo) => (
 					<img
 						src={item.snippet.thumbnails.high.url}
 						alt="youtube"
@@ -46,7 +48,7 @@ const YoutubeSlick = ({ youtube }: Props) => {
 				))}
 			</Carousel>
 			{showVideoZoom && <VideoZoom videoSrc={videoZoomSrc} setShowVideoZoom={setShowVideoZoom} />}
-		</>
+		</div>
 	);
 };
 
@@ -64,6 +66,10 @@ const customCss = css`
 	& .react-multi-carousel-item {
 		padding: 0.5rem;
 	}
+`;
+
+const youtubeWrapperStyle = css`
+	margin: 32px 0;
 `;
 
 // https://w3js.com/react-multi-carousel

@@ -54,8 +54,8 @@ const BlogLayout = ({ children }: Props) => {
 				</Col>
 			</Row>
 			<Row>
-				<Col md={4} sm={0} xs={0} offset={4}>
-					<Menu mode="inline" defaultOpenKeys={['sub1']} style={{ backgroundColor: 'inherit' }}>
+				<Col md={4} sm={0} xs={0} offset={4} css={sidebarStyle}>
+					<Menu mode="inline" defaultOpenKeys={['sub1']} css={menuStyle}>
 						<Menu.Item>
 							<Link href="/blog">전체</Link>
 						</Menu.Item>
@@ -106,6 +106,22 @@ const mobilNavbar = css`
 
 const marginAuto = css`
 	margin: auto;
+`;
+
+const menuStyle = css`
+	background-color: inherit;
+	& li .ant-menu-item {
+		display: flex;
+		align-items: center;
+	}
+	& li::after {
+		border-right: none !important;
+	}
+`;
+
+const sidebarStyle = css`
+	border-right: 1px solid rgb(240, 240, 240);
+	height: 70vh;
 `;
 
 export default BlogLayout;

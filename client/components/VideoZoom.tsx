@@ -10,7 +10,11 @@ type Props = {
 
 const VideoZoom = ({ videoSrc, setShowVideoZoom }: Props) => {
 	return (
-		<Overlay>
+		<Overlay
+			onClick={() => {
+				setShowVideoZoom(false);
+			}}
+		>
 			<div css={headerCss} onClick={() => setShowVideoZoom(false)}>
 				<CloseOutlined />
 			</div>
