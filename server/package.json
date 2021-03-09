@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "cross-env NODE_ENV=development nodemon",
-		"prod": "cross-env NODE_ENV=production nodemon",
+		"prod": "export NODE_ENV=production nodemon",
 		"dev2": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
 		"build": "babel src --out-dir dist --extensions \".ts\"",
 		"start": "cross-env NODE_ENV=production pm2 start dist/app.js"

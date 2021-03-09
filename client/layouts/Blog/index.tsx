@@ -10,6 +10,7 @@ import { SiTypescript, SiJavascript } from 'react-icons/si';
 import { HiDesktopComputer } from 'react-icons/hi';
 import { MdCreate } from 'react-icons/md';
 import { css } from '@emotion/react';
+import { instance } from '@/utils/http';
 import userSlice from '@/store/reducers/user';
 const { SubMenu } = Menu;
 
@@ -29,7 +30,7 @@ const BlogLayout = ({ children }: Props) => {
 	);
 	useEffect(() => {
 		const checkSession = async () => {
-			const { data } = await axios.post('http://localhost:3001/api/user/sessionCheck', null, {
+			const { data } = await instance.post('/user/sessionCheck', null, {
 				withCredentials: true,
 			});
 			if (data.isAdmin) {

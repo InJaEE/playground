@@ -16,7 +16,6 @@ import appRoot from 'app-root-path';
 const isProd = process.env.NODE_ENV === 'production';
 
 const dotEnvPath = path.join(appRoot.path, `.env${isProd ? '.production' : ''}`);
-
 require('dotenv').config({
 	path: dotEnvPath,
 });
@@ -24,6 +23,7 @@ require('dotenv').config({
 const app = express();
 const store = FileStore(session);
 
+console.log('sertesrtersesr@@@', process.env.FRONTEND_URL);
 app.use('/images', express.static('images'));
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: false }));
