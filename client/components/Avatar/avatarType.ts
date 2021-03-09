@@ -49,6 +49,7 @@ const accessories = [
 	'Sunglasses',
 	'Wayfarers',
 ];
+/*
 const hatColor = [
 	'Black',
 	'Blue01',
@@ -66,6 +67,7 @@ const hatColor = [
 	'Red',
 	'White',
 ];
+*/
 const facialHair = [
 	'Blank',
 	'BeardMedium',

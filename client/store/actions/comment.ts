@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { instance } from '@/utils/http';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AvatarStyle } from '@/components/Avatar/';
 
@@ -9,15 +9,10 @@ type AddComment = {
 	avatar: AvatarStyle;
 };
 
-const instance = axios.create({
-	baseURL: `http://localhost:3001/api/comment`,
-	withCredentials: true,
-});
-
 export const getComments = createAsyncThunk(
 	'comment/getComments',
 	async (data: { postId: string }) => {
-		const res = await instance.get('/', {
+		const res = await instance.get('/comment', {
 			params: data,
 		});
 		return res.data;
@@ -28,7 +23,7 @@ export const addComment = createAsyncThunk(
 	'comment/addComment',
 	async (data: AddComment, thunkAPI) => {
 		try {
-			const res = await instance.post('/', data);
+			const res = await instance.post('/comment', data);
 			// thunkAPI.dispatch(commentSlice.actions.addComment);
 			return Promise.resolve(res.data);
 		} catch (err) {
@@ -38,6 +33,6 @@ export const addComment = createAsyncThunk(
 );
 
 export const updateComment = createAsyncThunk('comment/updateComment', async (data, thunkAPI) => {
-	const res = await instance.put('/', data);
+	const res = await instance.put('/comment', data);
 	return res.data;
 });

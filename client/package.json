@@ -7,7 +7,9 @@
 		"start": "next start",
 		"type-check": "tsc",
 		"start-local": "concurrently \"npm run dev\" \"cd ../server && npm run dev\"",
-		"start-prod": "concurrently \"npm run start \" \"cd ../server && npm run start\""
+		"start-prod": "concurrently \"npm run start \" \"cd ../server && npm run start\"",
+		"start-temp": "concurrently \"cross-env NODE_ENV=production node app.js \" \"cd ../server && npm run prod\"",
+		"test": "cross-env NODE_ENV=production node app.js"
 	},
 	"dependencies": {
 		"@ant-design/icons": "^4.5.0",
@@ -18,6 +20,7 @@
 		"antd": "^4.12.3",
 		"avataaars": "^1.2.1",
 		"axios": "^0.21.1",
+		"cross-env": "^7.0.3",
 		"dayjs": "^1.10.4",
 		"html-react-parser": "^1.2.4",
 		"next": "latest",
@@ -52,6 +55,7 @@
 		"eslint-plugin-prettier": "^3.3.1",
 		"eslint-plugin-react": "^7.22.0",
 		"eslint-plugin-react-hooks": "^4.2.0",
+		"pm2": "^4.5.5",
 		"prettier": "^2.2.1",
 		"typescript": "4.1.5"
 	},

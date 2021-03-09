@@ -8,8 +8,8 @@
 		"dev": "cross-env NODE_ENV=development nodemon",
 		"prod": "cross-env NODE_ENV=production nodemon",
 		"dev2": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
-		"start": "ts-node -r tsconfig-paths/register dist/app.js",
-		"build": "babel src --out-dir dist --extensions \".ts\""
+		"build": "babel src --out-dir dist --extensions \".ts\"",
+		"start": "cross-env NODE_ENV=production pm2 start dist/app.js"
 	},
 	"keywords": [],
 	"author": "",

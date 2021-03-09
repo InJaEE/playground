@@ -15,7 +15,7 @@ import appRoot from 'app-root-path';
 
 const dotEnvPath = path.join(
 	appRoot.path,
-	`${process.env.NODE_ENV === 'production' ? 'production' : ''}.env`,
+	`.env${process.env.NODE_ENV === 'production' ? '.production' : ''}`,
 );
 
 require('dotenv').config({

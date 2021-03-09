@@ -1,7 +1,6 @@
 node_modules
 sessions
-.env
-production.env
+.env*
 logs
 images
 dist
