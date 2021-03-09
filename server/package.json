@@ -6,9 +6,10 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "cross-env NODE_ENV=development nodemon",
+		"prod": "cross-env NODE_ENV=production nodemon",
 		"dev2": "nodemon --exec ts-node -r tsconfig-paths/register src/app.ts",
 		"start": "ts-node -r tsconfig-paths/register dist/app.js",
-		"build": "babel src --out-dir dist --extensions '.ts'"
+		"build": "babel src --out-dir dist --extensions \".ts\""
 	},
 	"keywords": [],
 	"author": "",
@@ -39,6 +40,7 @@
 		"@babel/cli": "^7.12.10",
 		"@babel/core": "^7.12.10",
 		"@babel/node": "^7.12.10",
+		"@babel/plugin-transform-modules-commonjs": "^7.13.8",
 		"@babel/polyfill": "^7.12.1",
 		"@babel/preset-env": "^7.12.11",
 		"@babel/preset-typescript": "^7.12.13",
@@ -63,7 +65,7 @@
 		"eslint-plugin-prettier": "^3.3.1",
 		"faker": "^5.1.0",
 		"nodemon": "^2.0.7",
-		"pm2": "^4.5.1",
+		"pm2": "^4.5.5",
 		"prettier": "^2.2.1",
 		"ts-node": "^9.1.1",
 		"tsconfig-paths": "^3.9.0",

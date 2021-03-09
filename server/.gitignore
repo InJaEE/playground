@@ -1,5 +1,7 @@
 node_modules
 sessions
-prisma/.env
+.env
+production.env
 logs
 images
+dist

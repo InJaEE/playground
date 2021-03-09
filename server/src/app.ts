@@ -2,7 +2,6 @@ import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import FileStore from 'session-file-store';
-import config from '@/config/index';
 import router from '@/router/index';
 import prisma from '@/database';
 import logger from '@/utils/logger';
@@ -11,8 +10,17 @@ import schedule from '@/schedule';
 import cors from 'cors';
 import passport from 'passport';
 import passportConfig from '@/passport';
+import path from 'path';
+import appRoot from 'app-root-path';
 
-require('dotenv').config();
+const dotEnvPath = path.join(
+	appRoot.path,
+	`${process.env.NODE_ENV === 'production' ? 'production' : ''}.env`,
+);
+
+require('dotenv').config({
+	path: dotEnvPath,
+});
 
 const app = express();
 const store = FileStore(session);
@@ -27,12 +35,12 @@ app.use(
 		credentials: true,
 	}),
 );
-app.use(cookieParser(config.secret));
+app.use(cookieParser(process.env.secret));
 app.use(
 	session({
 		resave: false,
 		saveUninitialized: false,
-		secret: config.secret,
+		secret: process.env.secret,
 		store: new store({ logFn() {} }),
 		cookie: {
 			httpOnly: false,
@@ -71,7 +79,7 @@ app.response.returnError = function (status, message) {
 prisma.$connect().then(() => {
 	logger.info('Prisma connected!');
 	schedule();
-	app.listen(config.port, '0.0.0.0', () => {
-		console.info(`\u001b[96mServer on port at\u001b[00m \u001b[93m${config.port}\u001b[00m`);
+	app.listen(Number(process.env.port), '0.0.0.0', () => {
+		console.info(`\u001b[96mServer on port at\u001b[00m \u001b[93m${process.env.port}\u001b[00m`);
 	});
 });

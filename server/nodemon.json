@@ -7,9 +7,6 @@
 	},
 	"runOnChangeOnly": false,
 	"watch": ["src/**/*.ts", "src/**/*.js"],
-	"env": {
-		"NODE_ENV": "development"
-	},
 	"ext": "ts js json",
 	"exec": "ts-node  --transpile-only -r tsconfig-paths/register src/app.ts"
 }
