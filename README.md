@@ -22,4 +22,6 @@
 
 ### Devops
 
+- NginX
+- AWS EC2
 - Naver Cloud Platform
