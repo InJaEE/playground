@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(
 	cors({
-		origin: 'http://www.injae.kr:3000',
+		origin: 'http://localhost:3000',
 		credentials: true,
 	}),
 );

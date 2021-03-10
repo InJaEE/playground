@@ -56,10 +56,6 @@ const Blog = () => {
 										<img
 											css={previewImgStyle}
 											src={`${config.IMG_URL}/${item.images[0].path}`}
-											onError={(evt: SyntheticEvent<HTMLImageElement, Event>) => {
-												// ssr에서 작동안함
-												evt.currentTarget.src = `${config.IMG_URL}/images/noimage.jpg`;
-											}}
 											alt="image"
 										/>
 									)}
