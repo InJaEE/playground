@@ -4,11 +4,11 @@
 	"scripts": {
 		"dev": "next",
 		"build": "next build",
-		"start": "next start",
+		"start": "cross-env NODE_ENV=production pm2 start app.js",
 		"type-check": "tsc",
 		"start-local": "concurrently \"npm run dev\" \"cd ../server && npm run dev\"",
 		"start-prod": "concurrently \"npm run start \" \"cd ../server && npm run start\"",
-		"start-temp": "concurrently \"cross-env NODE_ENV=production pm2 start app.js \" \"cd ../server && npm run start\"",
+		"start-temp": "concurrently \"npm run start \" \"cd ../server && npm run start\"",
 		"test": "cross-env NODE_ENV=production node app.js"
 	},
 	"dependencies": {

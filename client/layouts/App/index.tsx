@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Header from '@/components/Header';
 import { MainWrapper } from './style';
 import 'antd/dist/antd.css';
+import TempDevAlert from '@/components/TempDevAlert';
 
 type Props = {
 	children: ReactNode;
@@ -19,6 +20,7 @@ const AppLayout = ({ children }: Props) => {
 				<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 			</Head>
 			<Header isMain={isMain} />
+			<TempDevAlert />
 			<MainWrapper isMain={isMain}>{children}</MainWrapper>
 		</div>
 	);

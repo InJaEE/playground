@@ -12,6 +12,7 @@ import { MdCreate } from 'react-icons/md';
 import { css } from '@emotion/react';
 import { instance } from '@/utils/http';
 import userSlice from '@/store/reducers/user';
+import TempDevAlert from '@/components/TempDevAlert';
 const { SubMenu } = Menu;
 
 type Props = {
@@ -41,6 +42,7 @@ const BlogLayout = ({ children }: Props) => {
 	}, [router]);
 	return (
 		<>
+			<TempDevAlert />
 			<Col md={0} sm={16} xs={16} offset={4}>
 				<div css={mobilNavbar}>
 					<Link href="/blog">전체</Link>
