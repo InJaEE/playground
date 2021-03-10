@@ -23,6 +23,7 @@ require('dotenv').config({
 const app = express();
 const store = FileStore(session);
 
+app.set('trust proxy', 1);
 app.use('/images', express.static('images'));
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: false }));
@@ -45,6 +46,7 @@ app.use(
 			secure: false,
 			maxAge: 1000 * 60 * 60 * 2,
 		},
+		proxy: true,
 	}),
 );
 
