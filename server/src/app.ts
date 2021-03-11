@@ -12,13 +12,12 @@ import helmet from 'helmet';
 import passport from 'passport';
 import passportConfig from '@/passport';
 import path from 'path';
-import appRoot from 'app-root-path';
+import dotenv from 'dotenv';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const dotEnvPath = path.join(appRoot.path, `.env${isProd ? '.production' : ''}`);
-require('dotenv').config({
-	path: dotEnvPath,
+dotenv.config({
+	path: path.resolve(process.cwd(), isProd ? '.env.production' : '.env.development'),
 });
 
 const app = express();
@@ -27,7 +26,7 @@ const store = FileStore(session);
 app.set('trust proxy', 1);
 app.use('/images', express.static('images'));
 
-if (process.env.NODE_ENV === 'production') {
+if (isProd) {
 	app.use(morgan('combined'));
 	app.use(helmet());
 } else {
@@ -61,13 +60,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig();
-
-app.use((req, res, next) => {
-	// console.log('req.id :', req.ip);
-	// const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	// console.log('ip: ', ip);
-	next();
-});
 
 app.use('/api', router);
 
