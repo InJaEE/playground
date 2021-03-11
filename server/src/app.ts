@@ -8,6 +8,7 @@ import logger from '@/utils/logger';
 import morgan from 'morgan';
 import schedule from '@/schedule';
 import cors from 'cors';
+import helmet from 'helmet';
 import passport from 'passport';
 import passportConfig from '@/passport';
 import path from 'path';
@@ -25,12 +26,19 @@ const store = FileStore(session);
 
 app.set('trust proxy', 1);
 app.use('/images', express.static('images'));
+
+if (process.env.NODE_ENV === 'production') {
+	app.use(morgan('combined'));
+	app.use(helmet());
+} else {
+	app.use(morgan('dev'));
+}
+
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: false }));
-app.use(morgan('dev'));
 app.use(
 	cors({
-		origin: 'http://localhost:3000',
+		origin: process.env.FRONTEND_URL,
 		credentials: true,
 	}),
 );
