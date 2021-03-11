@@ -79,7 +79,7 @@ app.response.returnError = function (status, message) {
 prisma.$connect().then(() => {
 	logger.info('Prisma connected!');
 	schedule();
-	app.listen(Number(process.env.port), '0.0.0.0', () => {
+	app.listen(Number(process.env.port), () => {
 		console.info(`\u001b[96mServer on port at\u001b[00m \u001b[93m${process.env.port}\u001b[00m`);
 	});
 });

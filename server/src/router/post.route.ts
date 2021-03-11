@@ -10,7 +10,6 @@ type Query = {
 };
 
 router.get('/', async (req, res) => {
-	//const { category, title } = req.query;
 	const { title, category } = req.query as Query;
 	const result = await prisma.post.findMany({
 		include: {
@@ -28,11 +27,7 @@ router.get('/', async (req, res) => {
 			use_yn: 'Y',
 		},
 	});
-	// prisma.image.findMany({
-	// 	include: {
 
-	// 	}
-	// })
 	res.returnSuccess({ result });
 });
 
@@ -184,11 +179,12 @@ router.delete('/:postId', async (req, res) => {
 
 router.get('/like/:postId', async (req, res) => {
 	const { postId } = req.params;
+	const ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress) as string;
 
 	const result = await prisma.like.findUnique({
 		where: {
 			ip_postId: {
-				ip: req.ip,
+				ip,
 				postId: Number(postId),
 			},
 		},
@@ -199,7 +195,10 @@ router.get('/like/:postId', async (req, res) => {
 
 router.post('/like/:postId', async (req, res) => {
 	const { postId } = req.params;
-	const ip = req.ip;
+	const ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress) as string;
+	console.log('IP@@@@@@@@@@@@@@@@@@@@', ip);
+	console.log('IP@@@@@@@@@@@@@@@@@@@@', ip);
+	console.log('IP@@@@@@@@@@@@@@@@@@@@', ip);
 
 	try {
 		await prisma.like.create({
