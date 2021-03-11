@@ -162,7 +162,7 @@ const base64ImgProcess = (contents, imgArr) => {
 	const removeBase64Contents = fileNameArr.reduce((acc, file) => {
 		return acc.replace(
 			/<img src="(data:image\/[^;]+;base64[^"]+)[^>]*">/i,
-			`<img src='${process.env.BAEKEND_URL}/${file}' alt='image'/>`,
+			`<img src='${process.env.BACKEND_URL}/${file}' alt='image'/>`,
 		);
 	}, contents);
 

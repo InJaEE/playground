@@ -1,13 +1,14 @@
 import winston from 'winston';
 import winstonDaily from 'winston-daily-rotate-file';
 import appRoot from 'app-root-path';
+import path from 'path';
 
 const { combine, timestamp, printf, label } = winston.format;
 
 const logFormat = printf(({ level, message, label, timestamp }) => {
 	return `${timestamp} [${label}] ${level}: ${message}`;
 });
-const dirname = `${appRoot}\\logs`;
+const dirname = path.join(appRoot.path, 'logs');
 const datePattern = 'YYYY-MM-DD';
 
 // error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6

@@ -23,12 +23,12 @@ dotenv.config({
 const app = express();
 const store = FileStore(session);
 
-app.set('trust proxy', 1);
 app.use('/images', express.static('images'));
 
 if (isProd) {
 	app.use(morgan('combined'));
 	app.use(helmet());
+	app.set('trust proxy', 1);
 } else {
 	app.use(morgan('dev'));
 }
@@ -48,12 +48,12 @@ app.use(
 		saveUninitialized: false,
 		secret: process.env.secret,
 		store: new store({ logFn() {} }),
+		proxy: true,
 		cookie: {
 			httpOnly: false,
 			secure: false,
 			maxAge: 1000 * 60 * 60 * 2,
 		},
-		proxy: true,
 	}),
 );
 
