@@ -3,6 +3,7 @@ import fs from 'fs';
 import { v4 as uuid } from 'uuid';
 import prisma from '@/database';
 const router = Router();
+import { isAdmin } from '@/middleware/auth';
 
 type Query = {
 	title: string;
@@ -50,7 +51,7 @@ router.get('/:postId', async (req, res) => {
 	res.returnSuccess({ result });
 });
 
-router.post('/', async (req, res) => {
+router.post('/', isAdmin, async (req, res) => {
 	const { title, contents, category_id } = req.body;
 
 	// 이미지 태그가 존재하는지 확인
@@ -86,7 +87,7 @@ router.post('/', async (req, res) => {
 	res.returnSuccess({ result: 'Success' });
 });
 
-router.put('/:postId', async (req, res) => {
+router.put('/:postId', isAdmin, async (req, res) => {
 	const { postId } = req.params;
 	const { title, contents, category_id } = req.body;
 
@@ -125,7 +126,6 @@ router.put('/:postId', async (req, res) => {
 			},
 		});
 	}
-
 	res.returnSuccess({ result: 'Update Success' });
 });
 
