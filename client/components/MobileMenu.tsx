@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
-import { Divider } from 'antd';
 import { GoogleOutlined, GithubFilled } from '@ant-design/icons';
 import { AiFillYoutube } from 'react-icons/ai';
 
@@ -10,6 +10,11 @@ type Props = {
 };
 
 const MobileMenu = ({ setShowMobileHeader }: Props) => {
+	const router = useRouter();
+	const menuHandler = (path: string) => {
+		router.push(path);
+		setShowMobileHeader(false);
+	};
 	return (
 		<>
 			<div css={menuBlock} onClick={() => setShowMobileHeader(false)} />
@@ -37,36 +42,24 @@ const MobileMenu = ({ setShowMobileHeader }: Props) => {
 						</Link>
 					</div>
 					<div css={menuMain}>
-						<Link href="/blog">
-							<div>
-								<a>Blog</a>
-							</div>
-						</Link>
-						<Link href="/devMemo">
-							<div>
-								<a>DevMemo</a>
-							</div>
-						</Link>
-						<Link href="/sports">
-							<div>
-								<a>Sports</a>
-							</div>
-						</Link>
-						<Link href="/stock">
-							<div>
-								<a>Stock</a>
-							</div>
-						</Link>
-						<Link href="/music">
-							<div>
-								<a>Music</a>
-							</div>
-						</Link>
-						<Link href="/info">
-							<div>
-								<a>Info</a>
-							</div>
-						</Link>
+						<div onClick={() => menuHandler('/blog')}>
+							<a>Blog</a>
+						</div>
+						<div onClick={() => menuHandler('/devMemo')}>
+							<a>DevMemo</a>
+						</div>
+						<div onClick={() => menuHandler('/sports')}>
+							<a>Sports</a>
+						</div>
+						<div onClick={() => menuHandler('/stock')}>
+							<a>Stock</a>
+						</div>
+						<div onClick={() => menuHandler('/music')}>
+							<a>Music</a>
+						</div>
+						<div onClick={() => menuHandler('/info')}>
+							<a>Info</a>
+						</div>
 					</div>
 				</div>
 			</nav>

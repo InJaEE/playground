@@ -52,20 +52,26 @@ const CreateCommentForm = ({ postId, commentType, parentId }: Prop) => {
 	);
 	return (
 		<Form form={form} onFinish={onFinishHandler}>
-			<Row gutter={24} css={commentAccountAreaStyle}>
-				<span>
-					<Avatar styleCollection={avatarStyle} />
-					<SyncOutlined css={randomButtonStyle} onClick={onClickHandler} />
-				</span>
-				<Col md={10} xs={24}>
-					<Form.Item name="author_id">
-						<Input type="email" prefix={<UserOutlined />} placeholder="이메일"></Input>
-					</Form.Item>
+			<Row>
+				<Col md={4} xs={4}>
+					<div onClick={onClickHandler}>
+						<Avatar styleCollection={avatarStyle} style={{ cursor: 'pointer' }} />
+						<SyncOutlined css={randomButtonStyle} />
+					</div>
 				</Col>
-				<Col md={10} xs={24}>
-					<Form.Item name="author_pwd">
-						<Input type="password" prefix={<LockOutlined />} placeholder="비밀번호"></Input>
-					</Form.Item>
+				<Col md={20} xs={20} css={flex}>
+					<Row gutter={24} css={commentAccountAreaStyle}>
+						<Col md={12} xs={24}>
+							<Form.Item name="author_id">
+								<Input type="email" prefix={<UserOutlined />} placeholder="이메일"></Input>
+							</Form.Item>
+						</Col>
+						<Col md={12} xs={24}>
+							<Form.Item name="author_pwd">
+								<Input type="password" prefix={<LockOutlined />} placeholder="비밀번호"></Input>
+							</Form.Item>
+						</Col>
+					</Row>
 				</Col>
 			</Row>
 			<Row css={formDescStyle}>
@@ -90,6 +96,9 @@ const CreateCommentForm = ({ postId, commentType, parentId }: Prop) => {
 const commentAccountAreaStyle = css`
 	display: flex;
 	align-items: center;
+	& .ant-form-item {
+		margin-bottom: 8px;
+	}
 `;
 
 const formDescStyle = css`
@@ -103,7 +112,12 @@ const commentInputAreaStyle = css`
 `;
 
 const randomButtonStyle = css`
-	transform: translate(-16px, -2px);
+	position: absolute;
+	transform: translate(-16px, 36px);
+`;
+
+const flex = css`
+	display: flex;
 `;
 
 export default CreateCommentForm;

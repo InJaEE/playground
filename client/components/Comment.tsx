@@ -43,13 +43,16 @@ const Comment = ({ comment, postId }: Props) => {
 					<span onClick={() => setOpenAddReplyComment(!openAddReplyComment)}>답글달기</span>,
 					<>
 						{comment.children.length > 0 && (
-							<span onClick={() => setOpenReplyComments(!openReplyComments)}>답글보기</span>
+							<span onClick={() => setOpenReplyComments(!openReplyComments)}>
+								{openReplyComments ? '답글숨기기' : '답글보기'}
+							</span>
 						)}
 					</>,
 				]}
 				author={<a>{comment.author_id}</a>}
 				avatar={
 					<Avatar
+						style={{ cursor: 'auto' }}
 						styleCollection={{
 							accessoriesType: comment.avatar.accessoriesType,
 							clotheColor: comment.avatar.clotheColor,

@@ -11,6 +11,7 @@ import YoutubeSlick from '@/components/YoutubeSlick';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { InitState } from '@/store/reducers/index';
+import TempDevAlert from '@/components/TempDevAlert';
 
 export type YoutubeVideo = {
 	etag: string;
@@ -53,6 +54,7 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 	}, [posts]);
 	return (
 		<>
+			<TempDevAlert />
 			<Slick />
 			<div css={main_wrapper}>
 				<Row gutter={32}>

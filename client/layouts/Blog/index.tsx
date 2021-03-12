@@ -3,17 +3,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { InitState } from '@/store/reducers/index';
-import axios from 'axios';
 import { Row, Col, Input, Menu, Button } from 'antd';
 import { headerStyle, writeButtonStyle, childrenColStyle } from './style';
 import { SiTypescript, SiJavascript } from 'react-icons/si';
-import { HiDesktopComputer } from 'react-icons/hi';
+import { HiDesktopComputer, HiMenu } from 'react-icons/hi';
+import { GiAlligatorClip } from 'react-icons/gi';
 import { MdCreate } from 'react-icons/md';
 import { css } from '@emotion/react';
 import { instance } from '@/utils/http';
 import userSlice from '@/store/reducers/user';
-import TempDevAlert from '@/components/TempDevAlert';
-const { SubMenu } = Menu;
 
 type Props = {
 	children: ReactNode;
@@ -29,6 +27,10 @@ const BlogLayout = ({ children }: Props) => {
 		},
 		[router],
 	);
+	const categoryMoveHandler = useCallback((category: string = '') => {
+		const query = category ? { category } : null;
+		router.push({ pathname: '/blog', query });
+	}, []);
 	useEffect(() => {
 		const checkSession = async () => {
 			const { data } = await instance.post('/user/sessionCheck', null, {
@@ -42,7 +44,6 @@ const BlogLayout = ({ children }: Props) => {
 	}, [router]);
 	return (
 		<>
-			<TempDevAlert />
 			<Col md={0} sm={16} xs={16} offset={4}>
 				<div css={mobilNavbar}>
 					<Link href="/blog">전체</Link>
@@ -59,28 +60,39 @@ const BlogLayout = ({ children }: Props) => {
 			<Row>
 				<Col md={4} sm={0} xs={0} offset={4} css={sidebarStyle}>
 					<Menu mode="inline" defaultOpenKeys={['sub1']} css={menuStyle}>
-						<Menu.Item>
-							<Link href="/blog">전체</Link>
+						<Menu.Item icon={<HiMenu />} onClick={() => categoryMoveHandler()}>
+							<Link href="/blog">
+								<strong>전체</strong>
+							</Link>
 						</Menu.Item>
-						<SubMenu title="Development" key="sub1">
-							<Menu.ItemGroup>
-								<Menu.Item key="1" icon={<SiTypescript />}>
-									<Link href={{ pathname: '/blog', query: { category: 'Typescript' } }}>
-										Typescript
-									</Link>
-								</Menu.Item>
-								<Menu.Item key="2" icon={<SiJavascript />}>
-									<Link href={{ pathname: '/blog', query: { category: 'Javascript' } }}>
-										Javscript
-									</Link>
-								</Menu.Item>
-								<Menu.Item key="3" icon={<HiDesktopComputer />}>
-									<Link href={{ pathname: '/blog', query: { category: 'CS' } }}>
-										ComputerScience
-									</Link>
-								</Menu.Item>
-							</Menu.ItemGroup>
-						</SubMenu>
+						<Menu.Item
+							key="1"
+							icon={<SiTypescript />}
+							onClick={() => categoryMoveHandler('Typescript')}
+						>
+							<strong>Typescript</strong>
+						</Menu.Item>
+						<Menu.Item
+							key="2"
+							icon={<SiJavascript />}
+							onClick={() => categoryMoveHandler('Javascript')}
+						>
+							<strong>Javscript</strong>
+						</Menu.Item>
+						<Menu.Item
+							key="3"
+							icon={<HiDesktopComputer />}
+							onClick={() => categoryMoveHandler('CS')}
+						>
+							<strong>CS</strong>
+						</Menu.Item>
+						<Menu.Item
+							key="4"
+							icon={<GiAlligatorClip />}
+							onClick={() => categoryMoveHandler('etc')}
+						>
+							<strong>etc</strong>
+						</Menu.Item>
 					</Menu>
 				</Col>
 				<Col md={12} sm={24} xs={24} css={childrenColStyle}>
@@ -113,7 +125,7 @@ const marginAuto = css`
 
 const menuStyle = css`
 	background-color: inherit;
-	& li .ant-menu-item {
+	& li {
 		display: flex;
 		align-items: center;
 	}

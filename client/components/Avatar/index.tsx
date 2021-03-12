@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import Avataaars from 'avataaars';
 
 export type AvatarStyle = {
@@ -16,13 +16,14 @@ export type AvatarStyle = {
 
 type Prop = {
 	styleCollection: AvatarStyle;
+	style?: CSSProperties;
 };
 
-const Avatar = ({ styleCollection }: Prop) => {
+const Avatar = ({ styleCollection, style }: Prop) => {
 	return (
 		<Avataaars
-			style={{ width: '50px', height: '50px' }}
-			avatarStyle="Circle"
+			style={{ ...style, width: '50px', height: '50px' }}
+			avatarStyle="Transparent"
 			topType={styleCollection.topType}
 			accessoriesType={styleCollection.accessoriesType}
 			hairColor={styleCollection.hairColor}

@@ -24,7 +24,7 @@ const Blog = () => {
 					size="large"
 					pagination={{
 						onChange: page => {
-							console.log(page);
+							// console.log(page);
 						},
 						pageSize: 10,
 						style: { textAlign: 'center' },
@@ -43,8 +43,8 @@ const Blog = () => {
 									router.push(`/blog/post/${item.id}`);
 								}}
 							>
-								<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-									<div className="ant-list-item-meta-description">{item.category.name}</div>
+								<div css={postHeaderStyle}>
+									<div>{item.category.name}</div>
 									<div>{dayjs(item.created_at).format('YYYY년 MM월 DD일')}</div>
 								</div>
 								<List.Item.Meta title={<span css={titleStyle}>{item.title}</span>} />
@@ -102,6 +102,15 @@ const contentsStyle = css`
 const previewImgStyle = css`
 	max-height: 10em;
 	max-width: 10em;
+`;
+
+const postHeaderStyle = css`
+	display: flex;
+	justify-content: space-between;
+	color: rgba(0, 0, 0, 0.45);
+	font-size: 12px;
+	line-height: 1.5715;
+	margin-bottom: 6px;
 `;
 
 export default Blog;
