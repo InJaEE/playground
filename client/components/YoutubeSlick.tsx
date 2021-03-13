@@ -39,6 +39,7 @@ const YoutubeSlick = ({ youtube, youtubeCategory }: Props) => {
 			>
 				{youtube.map((item: YoutubeVideo) => (
 					<img
+						width="100%"
 						src={item.snippet.thumbnails.high.url}
 						alt="youtube"
 						css={imgCss}

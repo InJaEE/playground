@@ -15,6 +15,7 @@ const AppLayout = ({ children }: Props) => {
 	return (
 		<div>
 			<Head>
+				<html lang="ko" />
 				<title>INJAE'S PLAYGROUND</title>
 				<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 			</Head>
