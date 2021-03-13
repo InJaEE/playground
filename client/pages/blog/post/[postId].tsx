@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadPost, deletePost, loadLikePost, islikedPost } from '@/store/actions/post';
 import wrapper from '@/store/';
@@ -63,6 +64,12 @@ const Content = () => {
 
 	return (
 		<BlogLayout>
+			<Head>
+				<meta name="description" content={post.contents} />
+				<meta property="og:title" content={post.title} />
+				<meta property="og:description" content={post.contents} />
+				<meta property="og:url" content={`https://www.injae.kr/blog/${post.id}`} />
+			</Head>
 			<span css={postCategory}>{post.category.name}</span>
 			<div css={postTitle}>{post.title}</div>
 			{/* <div>{post.like.length}개의 추천</div> */}
