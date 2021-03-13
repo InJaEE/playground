@@ -22,9 +22,9 @@ const Slick = () => {
 			itemClass="carousel-item-padding-40-px"
 			css={customCss}
 		>
-			<img width="100%" src="/carousel/coding.jpg" css={imgCss} alt="slick" />
-			<img width="100%" src="/carousel/mlb.jpg" css={imgCss} alt="slick" />
-			<img width="100%" src="/carousel/hiphop.jpg" css={imgCss} alt="slick" />
+			<img width="100%" height="100%" src="/carousel/coding.jpg" css={imgCss} alt="slick" />
+			<img width="100%" height="100%" src="/carousel/mlb.jpg" css={imgCss} alt="slick" />
+			<img width="100%" height="100%" src="/carousel/hiphop.jpg" css={imgCss} alt="slick" />
 		</Carousel>
 	);
 };

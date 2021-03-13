@@ -40,6 +40,7 @@ const YoutubeSlick = ({ youtube, youtubeCategory }: Props) => {
 				{youtube.map((item: YoutubeVideo) => (
 					<img
 						width="100%"
+						height="100%"
 						src={item.snippet.thumbnails.high.url}
 						alt="youtube"
 						css={imgCss}
@@ -54,7 +55,6 @@ const YoutubeSlick = ({ youtube, youtubeCategory }: Props) => {
 };
 
 const imgCss = css`
-	width: 100%;
 	max-width: 1903px;
 	max-height: 500px;
 	cursor: pointer;

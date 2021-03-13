@@ -15,10 +15,10 @@ const TempDevAlert = () => {
 };
 
 const overlay = css`
-	position: fixed;
+	position: fixed !important;
 	height: 150px;
 	width: 60vw;
-	margin: 0 auto;
+	margin: 0 auto !important;
 	top: 10%;
 	left: 0;
 	right: 0;
