@@ -48,10 +48,10 @@ app.use(
 		saveUninitialized: false,
 		secret: process.env.secret,
 		store: new store({ logFn() {} }),
-		proxy: true,
+		proxy: isProd ? true : null,
 		cookie: {
-			httpOnly: false,
-			secure: false,
+			httpOnly: isProd ? true : false,
+			secure: isProd ? true : false,
 			maxAge: 1000 * 60 * 60 * 2,
 		},
 	}),
