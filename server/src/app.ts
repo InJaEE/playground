@@ -52,6 +52,7 @@ app.use(
 		cookie: {
 			httpOnly: isProd ? true : false,
 			secure: isProd ? true : false,
+			sameSite: isProd ? 'none' : 'lax',
 			maxAge: 1000 * 60 * 60 * 2,
 		},
 	}),
