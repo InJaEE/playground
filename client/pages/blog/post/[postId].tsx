@@ -73,7 +73,7 @@ const Content = () => {
 			<span css={postCategory}>{post.category.name}</span>
 			<div css={postTitle}>{post.title}</div>
 			{/* <div>{post.like.length}개의 추천</div> */}
-			<div css={postCreatedAt}>{dayjs(post.created_at).format('YYYY년 MM월 DD일 hh:mm')}</div>
+			<div css={postCreatedAt}>{dayjs(post.created_at).format('YYYY년 MM월 DD일 HH:mm')}</div>
 			<Divider />
 			<div css={mainContentsStyle}>{htmlParse(post.contents)}</div>
 			{/* <LikeButtonWrapper like={like}>
@@ -122,6 +122,10 @@ const mainContentsStyle = css`
 	& img {
 		max-width: 100%;
 	}
+	/* & pre {
+		background-color: rgb(39, 39, 39);
+		color: white;
+	} */
 `;
 
 const buttonListStyle = css`
