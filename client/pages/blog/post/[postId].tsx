@@ -46,21 +46,21 @@ const Content = () => {
 		dispatch(getComments(queryParams));
 	}, [post]);
 
-	const onLikeHandler = useCallback(async () => {
-		const res = await dispatch(islikedPost(queryParams));
-		fetchLike();
-	}, [router]);
-	const fetchLike = useCallback(async () => {
-		const loadLikePostResult = await dispatch(loadLikePost(queryParams));
-		if (loadLikePostResult.payload.result) {
-			setLike(true);
-		} else {
-			setLike(false);
-		}
-	}, [queryParams]);
-	useEffect(() => {
-		fetchLike();
-	}, [like]);
+	// const onLikeHandler = useCallback(async () => {
+	// 	const res = await dispatch(islikedPost(queryParams));
+	// 	fetchLike();
+	// }, [router]);
+	// const fetchLike = useCallback(async () => {
+	// 	const loadLikePostResult = await dispatch(loadLikePost(queryParams));
+	// 	if (loadLikePostResult.payload.result) {
+	// 		setLike(true);
+	// 	} else {
+	// 		setLike(false);
+	// 	}
+	// }, [queryParams]);
+	// useEffect(() => {
+	// 	fetchLike();
+	// }, [like]);
 
 	return (
 		<BlogLayout>
@@ -76,12 +76,12 @@ const Content = () => {
 			<div css={postCreatedAt}>{dayjs(post.created_at).format('YYYY년 MM월 DD일 hh:mm')}</div>
 			<Divider />
 			<div css={mainContentsStyle}>{htmlParse(post.contents)}</div>
-			<LikeButtonWrapper like={like}>
+			{/* <LikeButtonWrapper like={like}>
 				<Button onClick={onLikeHandler} loading={loadLikePostLoading}>
 					{like ? <LikeTwoTone /> : <LikeOutlined />}
 					<span>좋아요</span>
 				</Button>
-			</LikeButtonWrapper>
+			</LikeButtonWrapper> */}
 			<Divider />
 			<div css={buttonListStyle}>
 				<Button onClick={() => router.push('/blog')}>목록으로</Button>
@@ -110,13 +110,6 @@ const Content = () => {
 		</BlogLayout>
 	);
 };
-
-// export async function getStaticPaths() {
-// 	return {
-// 		paths: [{ params: { id: '1' } }],
-// 		fallback: false,
-// 	};
-// }
 
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(async ctx => {
 	// SSR할때 이미지 처리 해줘야함

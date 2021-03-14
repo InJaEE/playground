@@ -48,7 +48,7 @@ const Header = ({ isMain }: Props) => {
 					<Link href="/blog">
 						<a>Blog</a>
 					</Link>
-					<Link href="/devMemo">
+					{/* <Link href="/devMemo">
 						<a>DevMemo</a>
 					</Link>
 					<Link href="/sports">
@@ -59,7 +59,7 @@ const Header = ({ isMain }: Props) => {
 					</Link>
 					<Link href="/music">
 						<a>Music</a>
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 			<div>

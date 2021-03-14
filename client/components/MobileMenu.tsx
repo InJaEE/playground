@@ -45,7 +45,7 @@ const MobileMenu = ({ setShowMobileHeader }: Props) => {
 						<div onClick={() => menuHandler('/blog')}>
 							<a>Blog</a>
 						</div>
-						<div onClick={() => menuHandler('/devMemo')}>
+						{/* <div onClick={() => menuHandler('/devMemo')}>
 							<a>DevMemo</a>
 						</div>
 						<div onClick={() => menuHandler('/sports')}>
@@ -56,7 +56,7 @@ const MobileMenu = ({ setShowMobileHeader }: Props) => {
 						</div>
 						<div onClick={() => menuHandler('/music')}>
 							<a>Music</a>
-						</div>
+						</div> */}
 						<div onClick={() => menuHandler('/info')}>
 							<a>Info</a>
 						</div>

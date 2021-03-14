@@ -53,7 +53,7 @@ const CreateCommentForm = ({ postId, commentType, parentId }: Prop) => {
 	return (
 		<Form form={form} onFinish={onFinishHandler}>
 			<Row>
-				<Col md={4} xs={4}>
+				<Col md={2} xs={4} css={avatarWrapperStyle}>
 					<div onClick={onClickHandler}>
 						<Avatar styleCollection={avatarStyle} style={{ cursor: 'pointer' }} />
 						<SyncOutlined css={randomButtonStyle} />
@@ -114,6 +114,12 @@ const commentInputAreaStyle = css`
 const randomButtonStyle = css`
 	position: absolute;
 	transform: translate(-16px, 36px);
+`;
+
+const avatarWrapperStyle = css`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 const flex = css`

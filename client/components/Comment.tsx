@@ -37,6 +37,7 @@ const Comment = ({ comment, postId }: Props) => {
 	return (
 		<>
 			<AntdComment
+				css={commentStyle}
 				key={comment.id}
 				actions={[
 					<span>{dayjs(comment.created_at).format('YYYY년 MM월 DD일')}</span>,
@@ -118,6 +119,13 @@ const Comment = ({ comment, postId }: Props) => {
 
 const childFormStyle = css`
 	margin-left: 3rem;
+`;
+const commentStyle = css`
+	& .ant-comment-avatar {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 `;
 
 export default Comment;

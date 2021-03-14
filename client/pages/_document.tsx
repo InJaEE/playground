@@ -5,7 +5,6 @@ class MyDocument extends Document {
 		return (
 			<Html lang="ko">
 				<Head>
-					<title>INJAE'S PLAYGROUND</title>
 					<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 					<meta name="description" content="INJAE's PLAYGROUND" />
 					<meta property="og:url" content="https://www.injae.kr" />

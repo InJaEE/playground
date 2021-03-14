@@ -78,14 +78,14 @@ const Home = ({ youtubeCategory, youtube }: Props) => {
 					</Col>
 				</Row>
 				<YoutubeSlick youtube={youtube} youtubeCategory={youtubeCategory} />
-				<Row gutter={32}>
+				{/* <Row gutter={32}>
 					<Col xs={24} md={12}>
 						<List header={<div>소식4</div>}></List>
 					</Col>
 					<Col xs={24} md={12}>
 						<List header={<div>소식5</div>}></List>
 					</Col>
-				</Row>
+				</Row> */}
 			</div>
 		</>
 	);

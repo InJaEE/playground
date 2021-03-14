@@ -54,6 +54,8 @@ const headerCss = css`
 	right: 12px;
 	height: 1.5rem;
 	width: 1.5rem;
+	color: white;
+	font-size: 1.75rem;
 	cursor: pointer;
 `;
 
