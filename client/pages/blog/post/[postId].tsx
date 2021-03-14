@@ -9,7 +9,7 @@ import BlogLayout from '@/layouts/Blog';
 import { InitState } from '@/store/reducers';
 import htmlParse from 'html-react-parser';
 import { Button, Divider } from 'antd';
-import { LikeOutlined, LikeTwoTone } from '@ant-design/icons';
+// import { LikeOutlined, LikeTwoTone } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import CreateCommentForm from '@/components/CreateCommentForm';
@@ -17,14 +17,15 @@ import { getComments } from '@/store/actions/comment';
 import Comment, { CommentInfo } from '@/components/Comment';
 import dayjs from 'dayjs';
 
+import hljs from 'highlight.js';
+import 'highlight.js/styles/tomorrow-night.css';
+
 const Content = () => {
-	const [like, setLike] = useState(false);
-	const { post, loadPostLoading, loadLikePostLoading } = useSelector(
-		(state: InitState) => state.post,
-	);
+	const { post /*loadLikePostLoading*/ } = useSelector((state: InitState) => state.post);
+	// const [like, setLike] = useState(false);
 	const { isAdmin } = useSelector((state: InitState) => state.user);
 	// comments는 SWR 사용할까?
-	const { comments, getCommentsLoading, total } = useSelector((state: InitState) => state.comment);
+	const { comments, total } = useSelector((state: InitState) => state.comment);
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const queryParams = useMemo(() => {
@@ -43,6 +44,9 @@ const Content = () => {
 		router.push('/blog');
 	}, [router]);
 	useEffect(() => {
+		document.querySelectorAll('pre code').forEach((block: Element) => {
+			hljs.highlightBlock(block as HTMLElement);
+		});
 		dispatch(getComments(queryParams));
 	}, [post]);
 

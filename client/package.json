@@ -20,6 +20,7 @@
 		"axios": "^0.21.1",
 		"cross-env": "^7.0.3",
 		"dayjs": "^1.10.4",
+		"highlight.js": "^10.6.0",
 		"html-react-parser": "^1.2.4",
 		"next": "latest",
 		"next-redux-wrapper": "^6.0.2",

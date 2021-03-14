@@ -88,7 +88,7 @@ const titleStyle = css`
 const contentsStyle = css`
 	display: flex;
 	justify-content: space-between;
-	& > a {
+	& > div {
 		max-height: 4.8em;
 		overflow: hidden;
 		display: -webkit-box;
