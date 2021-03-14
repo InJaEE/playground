@@ -5,8 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { InitState } from '@/store/reducers/index';
 import { Row, Col, Input, Menu, Button } from 'antd';
 import { headerStyle, writeButtonStyle, childrenColStyle } from './style';
-import { SiTypescript, SiJavascript } from 'react-icons/si';
+import { SiTypescript } from 'react-icons/si';
 import { HiDesktopComputer, HiMenu } from 'react-icons/hi';
+import { GrTroubleshoot } from 'react-icons/gr';
 import { GiAlligatorClip } from 'react-icons/gi';
 import { MdCreate } from 'react-icons/md';
 import { css } from '@emotion/react';
@@ -47,9 +48,12 @@ const BlogLayout = ({ children }: Props) => {
 			<Col md={0} sm={16} xs={16} offset={4}>
 				<div css={mobilNavbar}>
 					<Link href="/blog">전체</Link>
-					<Link href={{ pathname: '/blog', query: { category: 'Typescript' } }}>Typescript</Link>
-					<Link href={{ pathname: '/blog', query: { category: 'Javascript' } }}>Javscript</Link>
+					<Link href={{ pathname: '/blog', query: { category: 'Development' } }}>Development</Link>
+					<Link href={{ pathname: '/blog', query: { category: 'TroubleShooting' } }}>
+						TroubleShooting
+					</Link>
 					<Link href={{ pathname: '/blog', query: { category: 'CS' } }}>ComputerScience</Link>
+					<Link href={{ pathname: '/blog', query: { category: 'etc' } }}>etc</Link>
 				</div>
 			</Col>
 			<Row css={headerStyle}>
@@ -68,16 +72,16 @@ const BlogLayout = ({ children }: Props) => {
 						<Menu.Item
 							key="1"
 							icon={<SiTypescript />}
-							onClick={() => categoryMoveHandler('Typescript')}
+							onClick={() => categoryMoveHandler('Development')}
 						>
-							<strong>Typescript</strong>
+							<strong>Development</strong>
 						</Menu.Item>
 						<Menu.Item
 							key="2"
-							icon={<SiJavascript />}
-							onClick={() => categoryMoveHandler('Javascript')}
+							icon={<GrTroubleshoot />}
+							onClick={() => categoryMoveHandler('TroubleShooting')}
 						>
-							<strong>Javscript</strong>
+							<strong>TroubleShooting</strong>
 						</Menu.Item>
 						<Menu.Item
 							key="3"

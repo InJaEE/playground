@@ -50,7 +50,7 @@ const Comment = ({ comment, postId }: Props) => {
 						)}
 					</>,
 				]}
-				author={<a>{comment.author_id}</a>}
+				author={<div>{comment.author_id}</div>}
 				avatar={
 					<Avatar
 						style={{ cursor: 'auto' }}
