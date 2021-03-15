@@ -73,6 +73,14 @@ const Content = () => {
 				<meta property="og:title" content={post.title} />
 				<meta property="og:description" content={post.contents} />
 				<meta property="og:url" content={`https://www.injae.kr/blog/${post.id}`} />
+				<meta
+					property="og:image"
+					content={
+						post.images.length > 0
+							? `https://www.injae.site/${post.images[0].path}`
+							: '/favicon.ico'
+					}
+				/>
 			</Head>
 			<span css={postCategory}>{post.category.name}</span>
 			<div css={postTitle}>{post.title}</div>
