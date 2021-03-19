@@ -10,32 +10,32 @@
 	"description": "INJAE'S PLAYGROUND",
 	"icons": [
 		{
-			"src": "/images/icons/icon16.png",
+			"src": "/icons/icon16.png",
 			"sizes": "16x16",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/icons/icon48.png",
+			"src": "/icons/icon48.png",
 			"sizes": "48x48",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/icons/icon128.png",
+			"src": "/icons/icon128.png",
 			"sizes": "128x128",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/icons/icon144.png",
+			"src": "/icons/icon144.png",
 			"sizes": "144x144",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/icons/icon192.png",
+			"src": "/icons/icon192.png",
 			"sizes": "192x192",
 			"type": "image/png"
 		},
 		{
-			"src": "/images/icons/icon512.png",
+			"src": "/icons/icon512.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		}
