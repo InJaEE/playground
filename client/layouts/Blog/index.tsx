@@ -45,7 +45,7 @@ const BlogLayout = ({ children }: Props) => {
 	}, [router]);
 	return (
 		<>
-			<Col md={0} sm={16} xs={16} offset={4}>
+			{/* <Col md={0} sm={16} xs={16} offset={4}>
 				<div css={mobilNavbar}>
 					<Link href="/blog">전체</Link>
 					<Link href={{ pathname: '/blog', query: { category: 'Development' } }}>Development</Link>
@@ -55,14 +55,14 @@ const BlogLayout = ({ children }: Props) => {
 					<Link href={{ pathname: '/blog', query: { category: 'CS' } }}>ComputerScience</Link>
 					<Link href={{ pathname: '/blog', query: { category: 'etc' } }}>etc</Link>
 				</div>
-			</Col>
+			</Col> */}
 			<Row css={headerStyle}>
 				<Col md={6} xs={24} css={marginAuto}>
 					<Input.Search placeholder="INJAE's Blog" onSearch={searchHandler} />
 				</Col>
 			</Row>
 			<Row>
-				<Col md={4} sm={0} xs={0} offset={4} css={sidebarStyle}>
+				{/* <Col md={4} sm={0} xs={0} offset={4} css={sidebarStyle}>
 					<Menu mode="inline" defaultOpenKeys={['sub1']} css={menuStyle}>
 						<Menu.Item icon={<HiMenu />} onClick={() => categoryMoveHandler()}>
 							<Link href="/blog">
@@ -98,10 +98,13 @@ const BlogLayout = ({ children }: Props) => {
 							<strong>etc</strong>
 						</Menu.Item>
 					</Menu>
-				</Col>
-				<Col md={12} sm={24} xs={24} css={childrenColStyle}>
+				</Col> */}
+				{/* <Col md={12} sm={24} xs={24} css={childrenColStyle}> */}
+				<Col lg={6} md={4} xs={0} />
+				<Col lg={12} md={16} sm={24} xs={24} css={childrenColStyle}>
 					{children}
 				</Col>
+				<Col lg={6} md={4} xs={0} />
 			</Row>
 			{isAdmin && (
 				<Link href="/blog/write">
