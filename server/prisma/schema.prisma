@@ -55,6 +55,7 @@ model category {
   id String @id @default(uuid())
   name String @unique
   type String
+  post post[]
   description String?
 }
 
@@ -95,4 +96,13 @@ model user {
   password String
   role String
   created_at DateTime @default(now())
+}
+
+model memo {
+  id Int @id @default(autoincrement())
+  hashTag String
+  contents String
+  use_yn String @default("Y")
+  created_at DateTime @default(now())
+  updated_at DateTime?
 }
