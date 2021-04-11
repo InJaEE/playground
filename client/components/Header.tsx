@@ -48,10 +48,10 @@ const Header = ({ isMain }: Props) => {
 					<Link href="/blog">
 						<a>Blog</a>
 					</Link>
-					{/* <Link href="/devMemo">
-						<a>DevMemo</a>
+					<Link href="/memo">
+						<a>Memo</a>
 					</Link>
-					<Link href="/sports">
+					{/* <Link href="/sports">
 						<a>Sports</a>
 					</Link>
 					<Link href="/stock">
